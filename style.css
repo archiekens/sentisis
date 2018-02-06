@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+/*GENERAL STYLES*/
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+input {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    padding: 10px;
+}
+
+input[type=submit], button {
+    padding: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #EC7E26;
+    cursor: pointer;
+}
+
+input[type=submit]:hover, button:hover {
+    background-color: #DA792C;
+}
+
+a {
+    text-decoration: none;
+    color: #1683F2;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container-main {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    padding: 50px 80px;
+}
+
+.container-sub {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.container-half {
+    width: 40vw;
+}
+
+.form-error {
+    color: #EE1414;
+    display: none;
+}
+
+/*LOGIN STYLES*/
+
+.container-login {
+    max-height: 100vh;
+    justify-content: space-between;
+    background-color: rgba(0,30,150,0.7);
+    background-blend-mode: overlay;
+    background-image: url('images/bg-home.jpg');
+    background-size: cover;
+}
+
+
+.login-headers {
+    margin-bottom: 20px;
+}
+
+.login-headers h1 {
+    font-size: 42px;
+}
+
+.container-login .container-half-right {
+    align-items: center;
+}
+
+.container-login .container-half-left {
+    color: white;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 20px;
+    background-color: white;
+}
+
+.login-form>* {
+    margin-top: 10px;
+}
+
+.login-form-header {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+.login-form input {
+    font-size: 16px;
+}
+
+.login-form .form-error{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.login-form-forgot {
+    margin-left: 10px;
+}
+
+/*NAVBAR STYLES*/
+.container-nav {
+    height: 100vh;
+    max-width: 220px;
+    background-color: #263740;
+}
+
+.nav-options {
+    list-style-type: none;
+    background-color: white;
+}
+
+.nav-option {
+    background-color: #263740;
+    width: 100%;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-option:hover {
+    background-color: #308DBF;
+}
+
+.nav-option.active {
+    background-color: #308DBF;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 25%, 95% 50%, 100% 75%, 100% 100%, 0% 100%);
+}
+
+/*HOME STYLES*/
+.container-home {
+    width: 80vw;
+    margin-left: 10vw;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.product-item {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 400px;
+    padding: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.product-item:hover{
+    box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.25);
+}
+
+.product-item:hover .product-item-view-btn {
+    opacity: 1;
+}
+
+.product-item > *{
+    margin-bottom: 5px;
+}
+
+.product-item-image {
+    height: 400px;
+    background-image: url('images/product-default.jpg');
+    background-size: cover;
+}
+
+.product-item-rating {
+    height: 30px;
+    background-image: url('images/rating-small.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.product-item-view-btn {
+    opacity: 0;
+    transition: 0.3s all ease-in-out;
+}
