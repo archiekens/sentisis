@@ -31,4 +31,38 @@ App::uses('Controller', 'Controller');
  * @link		https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+	/**
+     * components
+     *
+     * @var array
+     */
+	public $components = [
+        'Flash',
+        'DebugKit.Toolbar',
+		'Auth' => [
+            'authenticate'=>[
+                'Form' => [
+                    'userModel'      => 'Customer',
+                    'fields'         => ['username' => 'email', 'password' => 'password'],
+                    'scope'          => ['Customer.deleted' => 0]
+                ]
+            ]
+        ]
+	];
+
+	// public var for  Auth Role
+    public $auth_role;
+    /**
+     * beforeFilder method
+     *
+     * @return void
+     */
+    public function beforeFilter() {
+        AuthComponent::$sessionKey  = 'Auth.Customer';
+        $this->Auth->loginAction    = ['controller' => 'customers', 'action' => 'login'];
+        $this->Auth->loginRedirect  = ['controller' => 'customers', 'action' => 'home'];
+        $this->Auth->logoutRedirect = ['controller' => 'customers', 'action' => 'login'];
+        $this->Auth->allow('login', 'home', 'view','add', 'dashboard', 'index', 'edit');
+    }
 }

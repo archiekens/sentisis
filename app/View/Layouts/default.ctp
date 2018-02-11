@@ -20,27 +20,28 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <!DOCTYPE html>
 <html>
 <head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $cakeDescription ?>:
-		<?php echo $this->fetch('title'); ?>
-	</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<?php
-		echo $this->Html->meta('icon');
+    <?php echo $this->Html->charset(); ?>
+    <title>
+        <?php echo $this->fetch('title'); ?>
+    </title>
+    <?php
+        echo $this->Html->meta('icon');
 
-		echo $this->Html->css('style');
+        echo $this->Html->css('style');
 
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-	?>
+        echo $this->fetch('meta');
+        echo $this->fetch('css');
+        echo $this->fetch('script');
+    ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="<?php echo $this->webroot; ?>js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-	<div id="container">
-		<div id="content">
-			<?php echo $this->fetch('content'); ?>
-		</div>
-	</div>
+    <div class="wrapper">
+        <?php echo $this->element('header'); ?>
+        <div id="content">
+            <?php echo $this->fetch('content'); ?>
+        </div>
+    </div>
 </body>
 </html>

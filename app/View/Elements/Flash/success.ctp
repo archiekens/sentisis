@@ -1,0 +1,1 @@
+<div id="<?php echo $key; ?>Message" class="<?php echo !empty($params['class']) ? $params['class'] : 'message'; ?> alert success show"><span class="alert-icon success"><i class="fa fa-check-circle-o"></i></span><?php echo $message; ?></div>

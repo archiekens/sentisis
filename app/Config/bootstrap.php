@@ -109,3 +109,9 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+
+CakePlugin::load('DebugKit');
+
+Configure::write('PRODUCT_IMAGE_PATH', WWW_ROOT . 'images' . DS . 'products' . DS);
+Configure::write('IMG_TMP_PATH', WWW_ROOT . 'images' . DS . 'temp' . DS);
