@@ -22,15 +22,15 @@ class ImageComponent extends Component {
         $file_name = $this->generateImageFileName();
         try {
             switch ($type) {
-                case 'banner-add':
-                    $dir = Configure::read('BANNER_IMAGE_PATH');
+                case 'product-add':
+                    $dir = Configure::read('PRODUCT_IMAGE_PATH');
                     $temp_dir = Configure::read('IMG_TMP_PATH');
                     // create folder if it does not exist
                     $create_folder = new Folder($dir, true);
                     rename($temp_dir.$tmp_image_file_name,  $dir.$file_name);
                     break;
-                case 'banner-edit':
-                    $dir = Configure::read('BANNER_IMAGE_PATH');
+                case 'product-edit':
+                    $dir = Configure::read('PRODUCT_IMAGE_PATH');
                     // create folder if it does not exist
                     $create_folder = new Folder($dir, true);
                     rename($tmp_image_file_name,  $dir.$file_name);
@@ -38,7 +38,7 @@ class ImageComponent extends Component {
                 case 'tmp':
                     $dir = Configure::read('IMG_TMP_PATH');
                     // create folder if it does not exist
-                    $banner_images_temp_folder = new Folder($dir, true);
+                    $product_images_temp_folder = new Folder($dir, true);
                     move_uploaded_file($tmp_image_file_name,  $dir.$file_name);
                     break;
             }

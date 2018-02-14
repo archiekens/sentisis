@@ -1,6 +1,6 @@
 <div class="container-main container-system-users container-form">
 <?php echo $this->Form->create('Product', ['class' => 'login-form', 'enctype'=>'multipart/form-data']); ?>
-        <h2 class="login-form-header"><?php echo __('Edit Product'); ?></h2>
+        <h2 class="login-form-header"><?php echo __('Add Product'); ?></h2>
             <?php
                 echo $this->Form->input('name', [
                     'type'        => 'text',
@@ -22,10 +22,9 @@
                     'div'         => false,
                 ]
             ); ?>
-            <?php echo $this->Form->input('old_image', ['type' => 'hidden', 'value' => $product_image]); ?>
             <div class="form-image-container">
                 <input type="file" id="profilePic" name="data[Product][image]" class="inputfile" onchange="previewPic(this,'product-img')" hidden/>
-                <img src="<?php echo $this->webroot.($product_image !='' ? 'images/products/'.$product_image : 'img/product-default.jpg'); ?>" onerror="this.src = '<?php echo $this->webroot; ?>img/product-default.jpg'" class="form-image" id="product-img">
+                <img src="<?php echo $this->webroot; ?>img/product-default.jpg" class="form-image" id="product-img">
                 <label for="profilePic" class="file-button"><i class="fa fa-upload"></i>Choose File</label>
             </div>
             <span class="form-error-msg"><?php echo __($this->Form->error('Product.image')); ?></span>

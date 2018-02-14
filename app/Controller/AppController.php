@@ -63,6 +63,6 @@ class AppController extends Controller {
         $this->Auth->loginAction    = ['controller' => 'customers', 'action' => 'login'];
         $this->Auth->loginRedirect  = ['controller' => 'customers', 'action' => 'home'];
         $this->Auth->logoutRedirect = ['controller' => 'customers', 'action' => 'login'];
-        $this->Auth->allow('login', 'home', 'view','add', 'dashboard', 'index', 'edit');
+        $this->Auth->allow('login', 'home', 'view','add', 'dashboard', 'index', 'edit', 'delete');
     }
 }

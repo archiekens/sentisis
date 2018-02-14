@@ -8,19 +8,29 @@
     box-sizing: border-box;
 }
 
-input {
+input, select, textarea {
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 2px;
     padding: 10px;
 }
 
-input[type=submit], button {
+input[type=submit], button, a.back-to-list-button {
     padding: 10px;
     border: none;
     color: white;
     font-weight: bold;
+    text-align: center;
     background-color: #2B7A78;
     cursor: pointer;
+}
+
+a.back-to-list-button {
+    text-decoration: none;
+    background-color: #17252A;
+}
+
+a.back-to-list-button:hover {
+    text-decoration: none;
 }
 
 input[type=submit]:hover, button:hover {
@@ -60,13 +70,22 @@ input[type=checkbox]:active, input[type=checkbox]:checked:active {
     box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
 }
 
-a {
-    text-decoration: none;
-    color: #3AAFA9;
+textarea {
+    resize: none;
 }
 
-a:hover {
+a, span.delete-link {
+    text-decoration: none;
+    color: #3AAFA9;
+    cursor: pointer
+}
+
+a:hover, span.delete-link:hover {
     text-decoration: underline;
+}
+
+svg.svg-inline--fa {
+    margin-right: 10px;
 }
 
 .wrapper {
@@ -76,7 +95,7 @@ a:hover {
 .container-main {
     display: flex;
     flex-wrap: wrap;
-    height: 100vh;
+    min-height: 100vh;
     padding: 50px 80px;
 }
 
@@ -490,7 +509,7 @@ a:hover {
 .view-product-rating-image{
     height: 34.5px;
     background:
-        linear-gradient(90deg, #EDEB15 0%, #EDEB15 50%,rgba(0,0,0,0) 50%),
+        linear-gradient(90deg, #EDEB15 0%, #EDEB15 0%,rgba(0,0,0,0) 0%),
         url('../img/rating-small.png');
     background-blend-mode: overlay;
     background-size: contain;
@@ -532,32 +551,48 @@ a:hover {
     align-self: flex-end;
 }
 
-/*SYSTEM USER LOGIN STYLES*/
+/*SYSTEM USER GENERAL STYLES*/
 
-.container-login-system-user {
+.container-system-users {
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
+}
+
+.back-to-list-button {
+    background-color: #17252A;
+}
+
+.back-to-list-button:hover {
+    background-color: #263A41;
+}
+
+.container-form {
+    margin-top: 40px;
+    justify-content: flex-start;
+}
+
+/*SYSTEM USER LOGIN STYLES*/
+
+.container-system-users-login {
     background-color: #3AAFA9;
 }
 
-.container-login-system-user .login-form {
+.container-system-users-login .login-form {
     background-color: inherit;
 }
 
-.container-login-system-user .login-form-header {
+.container-system-users-login .login-form-header {
     color: white;
     border-bottom: 1px solid rgba(255,255,255,0.4);
 }
 
 /*SYSTEM USER SIDEBAR STYLES*/
 .sidebar-system-user {
-    z-index: -1;
     background-color: #3AAFA9;
-    top: 0;
-    padding-top: 95px;
-    min-height: 100vh;
+    top: auto;
+    height: 100%;
 }
 
 .sidebar-system-user .sidebar-items {
@@ -598,7 +633,12 @@ a:hover {
 .container-system-users .container-query {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    margin-bottom: 50px;
+}
 
+.list-add-button {
+    font-size: 24px;
 }
 
 .table {
@@ -606,5 +646,31 @@ a:hover {
 }
 .table-cell {
     padding: 5px 15px;
-    border: 1px solid black;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+
+/*SYSTEM USER ADD/EDIT PRODUCT STYLES*/
+
+.form-image-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-image {
+    height: auto;
+    width: 100%;
+}
+
+.file-button {
+    padding: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    background-color: #3AAFA9;
+    cursor: pointer;
+}
+
+.file-button:hover {
+    background-color: #378F8A;
 }

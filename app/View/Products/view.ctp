@@ -3,7 +3,7 @@
     <div class="container-product-view-sub">
         <h2 class="container-product-header"><?php echo $product['Product']['name']; ?></h2>
         <div class="view-product-details">
-            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['id'].'/'.$product['Product']['image']; ?>">
+            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['image']; ?>">
             <div class="view-product-info">
                 <h4 class="view-product-info-header">Product Information</h4>
                 <p class="view-product-description"><?php echo $product['Product']['description']; ?></p>
@@ -11,7 +11,7 @@
             <div class="view-product-rating-container">
                 <h4 class="view-product-info-header">Average Product Rating</h4>
                 <span class="view-product-rating-image"></span>
-                <span class="view-product-rating-score">6.9 out of 5</span>
+                <span class="view-product-rating-score"><?php echo $product['Product']['rating']; ?> out of 5</span>
             </div>
         </div>
     </div>
@@ -39,3 +39,18 @@
         <?php endif; ?>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var rating = <?php echo $product['Product']['rating']; ?>;
+        var color_stop = (rating / 5)*100;
+        $('.view-product-rating-image').css({
+            "background":
+                "url('<?php echo $this->webroot;?>img/rating-small.png'), " + 
+                "linear-gradient(90deg, #DEDC09 0%, #DEDC09 "+color_stop+"%,rgba(0,0,0,0) "+color_stop+"%)",
+                
+            "background-size" : "contain",
+            "background-repeat" : "no-repeat",
+            "background-blend-mode" : "color-dodge"
+        });
+    });
+</script>
