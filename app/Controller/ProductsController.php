@@ -48,14 +48,23 @@ class ProductsController extends AppController {
                 'Comment.deleted' => 0
             ],
             'fields' => [
+                'Comment.id',
                 'Comment.content',
                 'Comment.created',
-                'Customer.name'
+                'Customer.name',
+                'Customer.id'
             ],
             'order' => ['created' => 'DESC']
 
         ]);
-        $this->set(compact('comments'));
+
+        $has_comment = false;
+        $customer_ids = Hash::extract($comments, '{n}.Customer.id');
+        if (in_array($this->Auth->user('id'), $customer_ids)) {
+            $has_comment = true;
+        }
+
+        $this->set(compact('comments','has_comment'));
     }
 
 }

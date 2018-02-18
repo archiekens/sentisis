@@ -45,11 +45,20 @@ class AppController extends Controller {
                 'Form' => [
                     'userModel'      => 'Customer',
                     'fields'         => ['username' => 'email', 'password' => 'password'],
-                    'scope'          => ['Customer.deleted' => 0]
+                    'scope'          => ['Customer.deleted' => 0],
+                    'passwordHasher' => 'Blowfish'
                 ]
             ]
         ]
 	];
+
+    public $product_types = [
+        'Phone',
+        'Tablet',
+        'Earphones',
+        'Camera',
+        'Laptop'
+    ];
 
 	// public var for  Auth Role
     public $auth_role;
@@ -63,6 +72,7 @@ class AppController extends Controller {
         $this->Auth->loginAction    = ['controller' => 'customers', 'action' => 'login'];
         $this->Auth->loginRedirect  = ['controller' => 'customers', 'action' => 'home'];
         $this->Auth->logoutRedirect = ['controller' => 'customers', 'action' => 'login'];
-        $this->Auth->allow('login', 'home', 'view','add', 'dashboard', 'index', 'edit', 'delete');
+        $this->Auth->allow();
+        $this->set('product_types', $this->product_types);
     }
 }

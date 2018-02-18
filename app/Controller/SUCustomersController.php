@@ -22,8 +22,43 @@ class SUCustomersController extends AppController {
  * @return void
  */
     public function index() {
-        $this->Customer->recursive = 0;
-        $this->set('customers', $this->Paginator->paginate());
+        $paging = 15;
+        $settings = [
+            'limit' => 15,
+            'fields' => ['*'],
+            'paramType' => 'querystring',
+            'conditions' => ['deleted' => '0'],
+            'order' => ['id' => 'DESC'],
+        ];
+
+        $this->Paginator->settings = $settings;
+        $customers = $this->Paginator->paginate('Customer');
+
+        $this->set(compact('customers'));
+    }
+
+    public function page_ajax() {
+        $this->layout = false;
+        $paging = 15;
+        if ($this->request->is('ajax')) {
+            $post_cond  = $this->request->data;
+
+            $conditions['Customer.deleted'] = 0;
+
+            $settings = [
+                'fields' => ['*'],
+                'paramType' => 'querystring',
+                'conditions' => $conditions,
+                'limit' => $paging
+            ];
+
+            $this->Paginator->settings = $settings;
+            $customers = $this->Paginator->paginate('Customer');
+
+        } else {
+            throw new MethodNotAllowedException();
+        }
+        $this->set(compact('customers'));
     }
 
 

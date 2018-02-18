@@ -32,6 +32,7 @@
                     'placeholder' => 'Password',
                     'label'       => false,
                     'div'         => false,
+                    'value'       => ''
                 ]
             ); ?>
             <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('Customer.password'); ?></span>

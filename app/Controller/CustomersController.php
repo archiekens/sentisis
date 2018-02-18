@@ -16,6 +16,10 @@ class CustomersController extends AppController {
     public $components = array('Paginator');
     public $uses = ['Customer','Product'];
 
+    public function beforeFilter() {
+        parent::beforeFilter();
+    }
+
 /**
  * index method
  *
@@ -35,7 +39,7 @@ class CustomersController extends AppController {
             $this->Customer->set($this->request->data);
             if ($this->Customer->validates()) {
                 if ($this->Auth->login()) {
-                    $this->redirect('customers', 'home');
+                    $this->redirect(['action' => 'home']);
                 } else {
                     $this->Customer->validationErrors['password'][] = 'Email or password is incorrect.';
                 }
@@ -45,15 +49,70 @@ class CustomersController extends AppController {
         }
     }
 
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
+    }
+
     /**
  * home method
  *
  * @return void
  */
     public function home() {
-        $products = $this->Product->find('all', ['conditions' => ['deleted' => 0]]);
+        if (!$this->Auth->user()) {
+            $this->redirect('login');
+        }
+        $this->__getBrands();
+        $paging = 15;
+        $settings = [
+            'limit' => 15,
+            'fields' => ['*'],
+            'paramType' => 'querystring',
+            'conditions' => ['deleted' => '0'],
+            'order' => ['id' => 'DESC'],
+        ];
+
+        $this->Paginator->settings = $settings;
+        $products = $this->Paginator->paginate('Product');
 
         $this->set(compact('products'));
+    }
+
+    public function page_ajax() {
+        $this->layout = false;
+        $paging = 15;
+        if ($this->request->is('ajax')) {
+            $post_cond  = $this->request->data;
+
+            $conditions['Product.deleted'] = 0;
+            if (isset($post_cond['Product']['type']) && $post_cond['Product']['type'] != 'null') {
+                $conditions['Product.type'] = $post_cond['Product']['type'];
+            }
+
+            $settings = [
+                'fields' => ['*'],
+                'paramType' => 'querystring',
+                'conditions' => $conditions,
+                'limit' => $paging,
+                'order' => ['id' => 'DESC'],
+            ];
+
+            $this->Paginator->settings = $settings;
+            $products = $this->Paginator->paginate('Product');
+
+        } else {
+            throw new MethodNotAllowedException();
+        }
+        $this->set(compact('products'));
+    }
+
+    private function __getBrands() {
+        $brands = $this->Product->find('list', [
+            'conditions' => ['deleted' => 0],
+            'group' => 'brand',
+            'fields' => 'brand'
+        ]);
+        $this->set(compact('brands'));
     }
 
 }

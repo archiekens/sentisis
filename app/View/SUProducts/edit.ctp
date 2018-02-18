@@ -13,6 +13,27 @@
             ); ?>
             <span class="form-error-msg" id="error-name"><?php echo $this->Form->error('Product.name'); ?></span>
             <?php
+                echo $this->Form->input('type', [
+                    'type'        => 'select',
+                    'options'     => $product_types,
+                    'error'       => false,
+                    'required'    => false,
+                    'label'       => false,
+                    'div'         => false,
+                ]
+            ); ?>
+            <?php
+                echo $this->Form->input('brand', [
+                    'type'        => 'text',
+                    'error'       => false,
+                    'required'    => false,
+                    'placeholder' => 'Brand',
+                    'label'       => false,
+                    'div'         => false,
+                ]
+            ); ?>
+            <span class="form-error-msg" id="error-brand"><?php echo $this->Form->error('Product.brand'); ?></span>
+            <?php
                 echo $this->Form->input('description', [
                     'type'        => 'textarea',
                     'error'       => false,

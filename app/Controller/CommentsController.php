@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+
 /**
  * Comments Controller
  *
@@ -13,7 +14,7 @@ class CommentsController extends AppController {
  *
  * @var array
  */
-    public $components = array('Paginator');
+    public $components = ['Paginator', 'Rating'];
 
 /**
  * index method
@@ -51,11 +52,12 @@ class CommentsController extends AppController {
             $data = $this->request->data;
             $this->Comment->create();
             if ($this->Comment->save($data)) {
+                $this->Rating->updateRating($data['Comment']['product_id']);
                 $this->Flash->success('Comment added');
                 $this->redirect('../products/view/'.$data['Comment']['product_id']);
             } else {
-                pr('failed');
-                die();
+                $this->Flash->error(__('The comment could not be saved. Please, try again.'));
+                $this->redirect('../products/view/'.$data['Comment']['product_id']);
             }
         }
     }
@@ -67,20 +69,21 @@ class CommentsController extends AppController {
  * @param string $id
  * @return void
  */
-    public function edit($id = null) {
-        if (!$this->Comment->exists($id)) {
+    public function edit() {
+        $this->autoRender = false;
+        $data = $this->request->data;
+
+        if (!$this->Comment->exists($data['id'])) {
             throw new NotFoundException(__('Invalid comment'));
         }
+
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Comment->save($this->request->data)) {
-                $this->Flash->success(__('The comment has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                $this->Rating->updateRating($data['product_id']);
+                $this->Flash->success(__('The comment has been updated.'));
             } else {
                 $this->Flash->error(__('The comment could not be saved. Please, try again.'));
             }
-        } else {
-            $options = array('conditions' => array('Comment.' . $this->Comment->primaryKey => $id));
-            $this->request->data = $this->Comment->find('first', $options);
         }
     }
 
@@ -91,17 +94,19 @@ class CommentsController extends AppController {
  * @param string $id
  * @return void
  */
-    public function delete($id = null) {
+    public function delete() {
+        $this->autoRender = false;
+        $id = $this->request->data['id'];
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
             throw new NotFoundException(__('Invalid comment'));
         }
         $this->request->allowMethod('post', 'delete');
         if ($this->Comment->delete()) {
+            $this->Rating->updateRating($data['product_id']);
             $this->Flash->success(__('The comment has been deleted.'));
         } else {
             $this->Flash->error(__('The comment could not be deleted. Please, try again.'));
         }
-        return $this->redirect(array('action' => 'index'));
     }
 }

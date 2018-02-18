@@ -23,8 +23,42 @@ class SUProductsController extends AppController {
  * @return void
  */
     public function index() {
-        $products = [];
-        $products = $this->Product->find('all', ['conditions' => ['deleted' => 0]]);
+        $paging = 15;
+        $settings = [
+            'limit' => 15,
+            'fields' => ['*'],
+            'paramType' => 'querystring',
+            'conditions' => ['deleted' => '0'],
+            'order' => ['id' => 'DESC'],
+        ];
+
+        $this->Paginator->settings = $settings;
+        $products = $this->Paginator->paginate('Product');
+
+        $this->set(compact('products'));
+    }
+
+    public function page_ajax() {
+        $this->layout = false;
+        $paging = 15;
+        if ($this->request->is('ajax')) {
+            $post_cond  = $this->request->data;
+
+            $conditions['Product.deleted'] = 0;
+
+            $settings = [
+                'fields' => ['*'],
+                'paramType' => 'querystring',
+                'conditions' => $conditions,
+                'limit' => $paging
+            ];
+
+            $this->Paginator->settings = $settings;
+            $products = $this->Paginator->paginate('Product');
+
+        } else {
+            throw new MethodNotAllowedException();
+        }
         $this->set(compact('products'));
     }
 
