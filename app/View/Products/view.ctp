@@ -12,7 +12,7 @@
     <div class="container-product-view-sub">
         <h2 class="container-product-header"><?php echo $product['Product']['name']; ?></h2>
         <div class="view-product-details">
-            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['image']; ?>">
+            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['image']; ?>" onerror="this.src = '<?php echo $this->webroot; ?>img/product-default.jpg'">
             <div class="view-product-info">
                 <h4 class="view-product-info-header">Product Information</h4>
                 <p class="view-product-type"><strong>Type : </strong><?php echo $product_types[$product['Product']['type']]; ?></p>
@@ -78,9 +78,9 @@
         });
     });
 
-    function deleteThis(id) {
-        var product_id = <?php echo $product['Product']['id']; ?>;
+    var product_id = <?php echo $product['Product']['id']; ?>;
 
+    function deleteThis(id) {
         if (confirm('Confirm delete?')) {
             $.ajax({
                 method: 'POST',

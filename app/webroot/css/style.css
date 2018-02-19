@@ -786,6 +786,15 @@ svg.svg-inline--fa {
     clip-path: polygon(0% 0%, 100% 0%, 100% 25%, 95% 50%, 100% 75%, 100% 100%, 0% 100%);
 }
 
+.sidebar-item-icon {
+    position: absolute;
+    margin-top: 2px;
+}
+
+.sidebar-item-name {
+    margin-left: 30px;
+}
+
 /*SUPRODUCTS INDEX STYLES*/
 
 .container-system-users {

@@ -12,7 +12,6 @@
         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
     <div class="container-sub container-half container-half-right">
-            <?php echo $this->Flash->render('auth'); ?>
             <?php echo $this->Form->create('Customer', ['class' => 'login-form']) ?>
             <h2 class="login-form-header">Sign in here</h2>
             <?php

@@ -1,4 +1,4 @@
-<div class="container-main container-system-users container-system-user-login">
+<div class="container-main container-system-users container-system-users-login">
     <?php echo $this->Form->create('SystemUser', ['class' => 'login-form']) ?>
             <h2 class="login-form-header">Admin Login</h2>
             <?php
@@ -11,7 +11,7 @@
                     'div'         => false,
                 ]
             ); ?>
-            <span class="form-error-msg" id="error-username"><?php echo $this->Form->error('Customer.username'); ?></span>
+            <span class="form-error-msg" id="error-username"><?php echo $this->Form->error('SystemUser.username'); ?></span>
             <?php
                 echo $this->Form->input('password', [
                     'type'        => 'password',
@@ -22,7 +22,7 @@
                     'div'         => false,
                 ]
             ); ?>
-            <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('Customer.password'); ?></span>
+            <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('SystemUser.password'); ?></span>
             <input type="submit" value="Login">
             <?php $this->Form->end(); ?>
 

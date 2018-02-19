@@ -13,7 +13,19 @@ class CustomersController extends AppController {
  *
  * @var array
  */
-    public $components = array('Paginator');
+    public $components = [
+        'Paginator',
+        'Auth' => [
+            'authenticate'=>[
+                'Form' => [
+                    'userModel'      => 'Customer',
+                    'fields'         => ['username' => 'email', 'password' => 'password'],
+                    'scope'          => ['Customer.deleted' => 0],
+                    'passwordHasher' => 'Blowfish'
+                ]
+            ]
+        ]
+    ];
     public $uses = ['Customer','Product'];
 
     public function beforeFilter() {
@@ -35,6 +47,9 @@ class CustomersController extends AppController {
  * @return void
  */
     public function login() {
+        if ($this->Auth->user()) {
+            $this->redirect('home');
+        }
         if ($this->request->is('POST')) {
             $this->Customer->set($this->request->data);
             if ($this->Customer->validates()) {
@@ -59,9 +74,6 @@ class CustomersController extends AppController {
  * @return void
  */
     public function home() {
-        if (!$this->Auth->user()) {
-            $this->redirect('login');
-        }
         $this->__getBrands();
         $paging = 15;
         $settings = [

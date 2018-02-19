@@ -13,7 +13,29 @@ class SystemUsersController extends AppController {
  *
  * @var array
  */
-    public $components = array('Paginator');
+    public $components = [
+        'Rating',
+        'Paginator',
+        'Auth' => [
+            'authenticate'=>[
+                'Form' => [
+                    'userModel'      => 'SystemUser',
+                    'scope'          => ['SystemUser.deleted' => 0],
+                    'fields'         => ['username' => 'username'],
+                    'passwordHasher' => 'Blowfish'
+                ]
+            ]
+        ]
+    ];
+
+    /**
+     * beforeFilder method
+     *
+     * @return void
+     */
+    public function beforeFilter() {
+        parent::beforeFilter();
+    }
 
 /**
  * index method
@@ -30,7 +52,25 @@ class SystemUsersController extends AppController {
  * @return void
  */
     public function login() {
-        
+        if ($this->Auth->user()) {
+            $this->redirect('dashboard');
+        }
+        if ($this->request->is('POST')) {
+            $this->SystemUser->set($this->request->data);
+            if ($this->SystemUser->validates()) {
+                if ($this->Auth->login()) {
+                    $this->redirect(['action' => 'dashboard']);
+                } else {
+                    $this->SystemUser->validationErrors['password'][] = 'Username or password is incorrect.';
+                }
+            } else {
+
+            }
+        }
+    }
+
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
     }
 
 /**
@@ -39,7 +79,11 @@ class SystemUsersController extends AppController {
  * @return void
  */
     public function dashboard() {
-        
+
+        $dataPoints = $this->Rating->getDataPoints();
+
+        $this->set(compact('dataPoints'));
+ 
     }
 
 /**

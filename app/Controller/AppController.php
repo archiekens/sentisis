@@ -27,30 +27,21 @@ App::uses('Controller', 'Controller');
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
- * @package		app.Controller
- * @link		https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
+ * @package     app.Controller
+ * @link        https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
 
-	/**
+    /**
      * components
      *
      * @var array
      */
-	public $components = [
+    public $components = [
         'Flash',
         'DebugKit.Toolbar',
-		'Auth' => [
-            'authenticate'=>[
-                'Form' => [
-                    'userModel'      => 'Customer',
-                    'fields'         => ['username' => 'email', 'password' => 'password'],
-                    'scope'          => ['Customer.deleted' => 0],
-                    'passwordHasher' => 'Blowfish'
-                ]
-            ]
-        ]
-	];
+        'Auth'
+    ];
 
     public $product_types = [
         'Phone',
@@ -60,19 +51,38 @@ class AppController extends Controller {
         'Laptop'
     ];
 
-	// public var for  Auth Role
-    public $auth_role;
     /**
      * beforeFilder method
      *
      * @return void
      */
     public function beforeFilter() {
-        AuthComponent::$sessionKey  = 'Auth.Customer';
-        $this->Auth->loginAction    = ['controller' => 'customers', 'action' => 'login'];
-        $this->Auth->loginRedirect  = ['controller' => 'customers', 'action' => 'home'];
-        $this->Auth->logoutRedirect = ['controller' => 'customers', 'action' => 'login'];
-        $this->Auth->allow();
+        $page_type = 1; //1 : admin, 2: customer
+        $controller_action = $this->request->params['action'];
+        $controller_controller = $this->request->params['controller'];
+
+        switch ($controller_controller) {
+            case 'customers':
+                $page_type = 2;
+                break;
+            case 'products':
+                $page_type = 2;
+                break;
+        }
+
+        if ($page_type == 1) {
+            AuthComponent::$sessionKey  = 'Auth.SystemUser';
+            $this->Auth->loginAction    = ['controller' => 'system_users', 'action' => 'login'];
+            $this->Auth->loginRedirect  = ['controller' => 'system_users', 'action' => 'dashboard'];
+            $this->Auth->logoutRedirect = ['controller' => 'system_users', 'action' => 'login'];
+        } else {
+            AuthComponent::$sessionKey  = 'Auth.Customer';
+            $this->Auth->loginAction    = ['controller' => 'customers', 'action' => 'login'];
+            $this->Auth->loginRedirect  = ['controller' => 'customers', 'action' => 'home'];
+            $this->Auth->logoutRedirect = ['controller' => 'customers', 'action' => 'login'];
+        }
+
         $this->set('product_types', $this->product_types);
+        $this->set('page_type', $page_type);
     }
 }
