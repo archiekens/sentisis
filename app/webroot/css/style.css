@@ -199,10 +199,31 @@ svg.svg-inline--fa {
     z-index: 10;
 }
 
+.popup *{
+    visibility: hidden;
+}
+
+.popup.show * {
+    animation-name: delayed-display;
+    animation-delay: 0.3s;
+    animation-duration: 0s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes delayed-display {
+    0%{
+        visibility: hidden;
+    }
+    100%{
+        visibility: visible;
+    }
+}
+
 .popup.show{
-    height: auto;
-    width: auto;
-    transform: translate(-50%, -50%);
+    height: 280px;
+    width: 380px;
+    margin-top: -140px;
+    margin-left: -160px;
     opacity: 1;
 }
 
