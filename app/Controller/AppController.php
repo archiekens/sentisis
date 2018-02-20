@@ -68,6 +68,9 @@ class AppController extends Controller {
             case 'products':
                 $page_type = 2;
                 break;
+            case 'comments':
+                $page_type = 2;
+                break;
         }
 
         if ($page_type == 1) {
