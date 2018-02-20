@@ -16,34 +16,43 @@
             <ul class="sidebar-item-options">
                 <?php foreach ($brands as $brand): ?>
                 <li class="sidebar-item-option">
-                    <input type="checkbox" id="<?php echo 'check-'.$brand; ?>">
+                    <input type="checkbox" class="check-brand" data-brand-name="<?php echo $brand; ?>" id="<?php echo 'check-'.$brand; ?>">
                     <label for="<?php echo 'check-'.$brand; ?>"><?php echo $brand; ?></label>
                 </li>
                 <?php endforeach ?>
+                <input type="hidden" name="data[Product][brand_array]" id="brand_array">
             </ul>
         </li>
         <li class="sidebar-item">
             <h4 class="sidebar-item-header">Rating</h4>
             <ul class="sidebar-item-options">
                 <li class="sidebar-item-option">
-                    <input type="radio" name="data[Product][rating]" id="id10">
-                    <label for="id10"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></label>
+                    <input type="radio" name="data[Product][rating]" value="5" id="id10">
+                    <label for="id10"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                 </li>
                 <li class="sidebar-item-option">
-                    <input type="radio" name="data[Product][rating]" id="id11">
-                    <label for="id11"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></label>
+                    <input type="radio" name="data[Product][rating]" value="4" id="id11">
+                    <label for="id11"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-arrow-up"></i></label>
                 </li>
                 <li class="sidebar-item-option">
-                    <input type="radio" name="data[Product][rating]" id="id12">
-                    <label for="id12"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></label>
+                    <input type="radio" name="data[Product][rating]" value="3" id="id12">
+                    <label for="id12"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-arrow-up"></i></label>
                 </li>
                 <li class="sidebar-item-option">
-                    <input type="radio" name="data[Product][rating]" id="id13">
-                    <label for="id13"><i class="fa fa-star"></i> <i class="fa fa-star"></i></label>
+                    <input type="radio" name="data[Product][rating]" value="2" id="id13">
+                    <label for="id13"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-arrow-up"></i></label>
                 </li>
                 <li class="sidebar-item-option">
-                    <input type="radio" name="data[Product][rating]" id="id14">
-                    <label for="id14"><i class="fa fa-star"></i></label>
+                    <input type="radio" name="data[Product][rating]" value="1" id="id14">
+                    <label for="id14"><i class="fa fa-star"></i><i class="fa fa-arrow-up"></i></label>
+                </li>
+                <li class="sidebar-item-option">
+                    <input type="radio" name="data[Product][rating]" value="0" id="id15" checked="true">
+                    <label for="id15">Unrated</label>
+                </li>
+                <li class="sidebar-item-option">
+                    <input type="radio" name="data[Product][rating]" value="null" id="id16" checked="true">
+                    <label for="id16">Any Rating</label>
                 </li>
             </ul>
         </li>
@@ -114,6 +123,21 @@
                 $("#ProductHomeForm").submit();
                 e.preventDefault();
             }
+        });
+
+        $('.check-brand').change(function() {
+            let brands = [];
+            $('.check-brand').each(function() {
+                if (this.checked) {
+                    brands.push(this.dataset['brandName']);
+                }
+            });
+            $('#brand_array').val(brands);
+            $("#ProductHomeForm").submit();
+        });
+
+        $(document).delegate('[type=radio]', 'change ', function () {
+            $("#ProductHomeForm").submit();
         });
 
         $(document).delegate('[id=device-type]', 'keyup change ', function () {

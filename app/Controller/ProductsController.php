@@ -58,13 +58,7 @@ class ProductsController extends AppController {
 
         ]);
 
-        $has_comment = false;
-        $customer_ids = Hash::extract($comments, '{n}.Customer.id');
-        if (in_array($this->Auth->user('id'), $customer_ids)) {
-            $has_comment = true;
-        }
-
-        $this->set(compact('comments','has_comment'));
+        $this->set(compact('comments'));
     }
 
 }

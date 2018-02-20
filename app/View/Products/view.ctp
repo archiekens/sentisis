@@ -47,7 +47,6 @@
                 </div>
             </div>
         <?php endforeach; ?>
-        <?php if (!$has_comment) : ?>
         <div class="comment-add">
             <?php echo $this->Form->create('Comment', ['url' => '../comments/add', 'method' => 'POST']); ?>
             <input type="hidden" name="data[Comment][product_id]" value="<?php echo $product['Product']['id']; ?>">
@@ -56,7 +55,6 @@
             <input type="submit" class="comment-add-submit" value="Submit">
             <?php echo $this->Form->end(); ?>
         </div>
-        <?php endif; ?>
         <?php if (count($comments) == 0 ) : ?>
             <span class="comment-empty-msg">No comments for this product yet.</span>
         <?php endif; ?>

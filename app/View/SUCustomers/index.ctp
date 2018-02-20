@@ -1,6 +1,6 @@
 <?php echo $this->element('SUsidebar'); ?>
-<?php echo $this->Flash->render(); ?>
 <div class="container-partial container-system-users" id="customerContainer">
+    <?php echo $this->Flash->render(); ?>
     <div class="container-query">
         <div class="main-query">
             <h2>All Customers</h2>

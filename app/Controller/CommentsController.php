@@ -103,7 +103,7 @@ class CommentsController extends AppController {
         }
         $this->request->allowMethod('post', 'delete');
         if ($this->Comment->delete()) {
-            $this->Rating->updateRating($data['product_id']);
+            $this->Rating->updateRating($id);
             $this->Flash->success(__('The comment has been deleted.'));
         } else {
             $this->Flash->error(__('The comment could not be deleted. Please, try again.'));

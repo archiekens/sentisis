@@ -101,6 +101,21 @@ class CustomersController extends AppController {
                 $conditions['Product.type'] = $post_cond['Product']['type'];
             }
 
+            if (isset($post_cond['Product']['brand_array']) && $post_cond['Product']['brand_array'] != '') {
+                $brands = explode(",",$post_cond['Product']['brand_array']);
+                $conditions['Product.brand'] = $brands;
+                $this->set(compact('brands'));
+            }
+
+            if (isset($post_cond['Product']['rating']) && $post_cond['Product']['rating'] != 'null') {
+                if ( $post_cond['Product']['rating'] != 0) {
+                    $conditions['Product.rating >='] = $post_cond['Product']['rating'];
+                } else {
+                    $conditions['Product.rating'] = $post_cond['Product']['rating'];
+                }
+                $this->set('rating', $post_cond['Product']['rating']);
+            }
+
             $settings = [
                 'fields' => ['*'],
                 'paramType' => 'querystring',
@@ -111,7 +126,7 @@ class CustomersController extends AppController {
 
             $this->Paginator->settings = $settings;
             $products = $this->Paginator->paginate('Product');
-
+            
         } else {
             throw new MethodNotAllowedException();
         }
@@ -122,7 +137,8 @@ class CustomersController extends AppController {
         $brands = $this->Product->find('list', [
             'conditions' => ['deleted' => 0],
             'group' => 'brand',
-            'fields' => 'brand'
+            'fields' => 'brand',
+            'order' => ['brand' => 'ASC']
         ]);
         $this->set(compact('brands'));
     }
