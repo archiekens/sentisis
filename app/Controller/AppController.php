@@ -57,6 +57,7 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeFilter() {
+        $this->Auth->allow('register');
         $page_type = 1; //1 : admin, 2: customer
         $controller_action = $this->request->params['action'];
         $controller_controller = $this->request->params['controller'];

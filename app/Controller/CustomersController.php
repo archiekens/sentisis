@@ -143,4 +143,28 @@ class CustomersController extends AppController {
         $this->set(compact('brands'));
     }
 
+/**
+ * register method
+ *
+ * @return void
+ */
+    public function register() {
+        if ($this->Auth->user()) {
+            $this->redirect('/customers/home');
+        }
+        if ($this->request->is('post')) {
+            $data = $this->request->data;
+            $this->Customer->set($data);
+            if ($this->Customer->validates()) {
+                $this->Customer->create();
+                if ($this->Customer->save($data)) {
+                    $this->Flash->success(__('You have successfully registered'));
+                    return $this->redirect(array('action' => 'login'));
+                } else {
+                    $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+                }
+            }
+        }
+    }
+
 }

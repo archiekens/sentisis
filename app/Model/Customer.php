@@ -31,6 +31,24 @@ class Customer extends AppModel {
                 'rule' => ['lengthBetween', 8,32],
                 'message' => 'Please input minimum of 8 characters up to 32 characters.'
             ],
+            'match_confirm' => [
+                'rule' => ['matchConfirm'],
+                'message' => 'Passwords do not match.'
+            ]
+        ],
+        'confirm_password' => [
+            'required' => [
+                'rule' => 'notBlank',
+                'message' => 'Confirm password is required.'
+            ],
+            'alphaNumeric' => [
+                'rule' => 'alphaNumeric',
+                'message' => 'Please enter alphanumeric characters.'
+            ],
+            'char_length' => [
+                'rule' => ['lengthBetween', 8,32],
+                'message' => 'Please input minimum of 8 characters up to 32 characters.'
+            ]
         ]
     ];
 
@@ -46,6 +64,15 @@ class Customer extends AppModel {
             $this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
         }
         return true;
+    }
+
+    public function matchConfirm() {
+        $request = Router::getRequest()['data'];
+        if ($request['Customer']['password'] == $request['Customer']['confirm_password']) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

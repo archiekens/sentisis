@@ -297,6 +297,12 @@ svg.svg-inline--fa {
     margin-top: 10px;
 }
 
+.login-form .message {
+    font-size: 16px;
+    padding: 10px;
+    margin: 0;
+}
+
 .login-form-header {
     color: #17252A;
     padding-bottom: 5px;

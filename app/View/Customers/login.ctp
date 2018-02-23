@@ -13,6 +13,7 @@
     </div>
     <div class="container-sub container-half container-half-right">
             <?php echo $this->Form->create('Customer', ['class' => 'login-form']) ?>
+            <?php echo $this->Flash->render(); ?>
             <h2 class="login-form-header">Sign in here</h2>
             <?php
                 echo $this->Form->input('email', [
@@ -36,8 +37,8 @@
                 ]
             ); ?>
             <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('Customer.password'); ?></span>
-            <a href="#" class="login-form-forgot">Forgot password?</a>
             <input type="submit" value="Login">
+            <a class="back-to-list-button" href="/customers/register">Register</a>
             <?php echo $this->Form->end(); ?>
     </div>
 </div>
