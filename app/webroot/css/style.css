@@ -597,6 +597,7 @@ svg.svg-inline--fa {
 
 .view-product-image {
     height: 320px;
+    max-width: 280px;
     padding-right: 30px;
     border-right: 1px solid rgba(0,0,0,0.075);
     object-fit: contain;

@@ -68,6 +68,9 @@ class Customer extends AppModel {
 
     public function matchConfirm() {
         $request = Router::getRequest()['data'];
+        if (!isset($request['Customer']['confirm_password'])) {
+            return true;
+        }
         if ($request['Customer']['password'] == $request['Customer']['confirm_password']) {
             return true;
         } else {
