@@ -85,6 +85,7 @@ a:hover, span.delete-link:hover {
 }
 
 svg.svg-inline--fa {
+    font-size: 1.25em;
     margin-right: 10px;
 }
 
@@ -323,6 +324,12 @@ svg.svg-inline--fa {
     margin-left: 10px;
 }
 
+.form-notes {
+    color: #666666;
+    font-size: 12px;
+    margin: 0px;
+}
+
 /*NAVBAR STYLES*/
 .container-nav {
     height: 100vh;
@@ -497,6 +504,7 @@ svg.svg-inline--fa {
     display: flex;
     position: absolute;
     top: 0;
+    min-height: 95px;
     width: 100vw;
     max-width: 100%;
     padding: 10px 30px;
@@ -794,10 +802,12 @@ svg.svg-inline--fa {
 .sidebar-item-icon {
     position: absolute;
     margin-top: 2px;
+
 }
 
 .sidebar-item-name {
-    margin-left: 30px;
+    margin-left: 40px;
+    letter-spacing: 0.05em;
 }
 
 /*SUPRODUCTS INDEX STYLES*/

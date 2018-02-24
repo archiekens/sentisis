@@ -11,7 +11,7 @@
                 text: "Comment Rating Percentages"
             },
             subtitles: [{
-                text: "<?php echo date('F j, Y'); ?>"
+                text: "Out of <?php echo $comment_count;?> comments on <?php echo date('F j, Y'); ?>"
             }],
             data: [{
                 type: "pie",

@@ -23,13 +23,12 @@ class SUProductsController extends AppController {
  * @return void
  */
     public function index() {
-        $paging = 15;
+        $paging = 10;
         $settings = [
-            'limit' => 15,
+            'limit' => 10,
             'fields' => ['*'],
             'paramType' => 'querystring',
             'conditions' => ['deleted' => '0'],
-            'order' => ['id' => 'DESC'],
         ];
 
         $this->Paginator->settings = $settings;
@@ -40,7 +39,7 @@ class SUProductsController extends AppController {
 
     public function page_ajax() {
         $this->layout = false;
-        $paging = 15;
+        $paging = 10;
         if ($this->request->is('ajax')) {
             $post_cond  = $this->request->data;
 
@@ -254,6 +253,7 @@ class SUProductsController extends AppController {
  * @return void
  */
     public function delete($id = null) {
+        $this->autoRender = false;
         $this->Product->id = $id;
         if (!$this->Product->exists()) {
             throw new NotFoundException(__('Invalid product'));
@@ -264,6 +264,5 @@ class SUProductsController extends AppController {
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));
         }
-        return $this->redirect(array('action' => 'index'));
     }
 }

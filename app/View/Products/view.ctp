@@ -51,7 +51,8 @@
             <?php echo $this->Form->create('Comment', ['url' => '../comments/add', 'method' => 'POST']); ?>
             <input type="hidden" name="data[Comment][product_id]" value="<?php echo $product['Product']['id']; ?>">
             <input type="hidden" name="data[Comment][customer_id]" value="<?php echo AuthComponent::user('id') !== null ? '1' : '1'; ?>">
-            <textarea class="comment-add-content" name="data[Comment][content]" maxlength="255"></textarea>
+            <textarea id="comment-add-content" class="comment-add-content" name="data[Comment][content]" maxlength="255"></textarea>
+            <span class="form-error-msg" id="error-add-content" style="display: none;">Comment cannot be empty.</span>
             <input type="submit" class="comment-add-submit" value="Submit">
             <?php echo $this->Form->end(); ?>
         </div>
@@ -75,6 +76,26 @@
             "background-blend-mode" : "color-dodge",
         });
     });
+
+    $("#CommentViewForm").on('submit', function(e) {
+        $('#error-add-content').css('display', 'none');
+        if ($('#comment-add-content').val() != '') {
+            $.ajax({
+                url: '<?php echo $this->webroot;?>comments/add',
+                method: 'POST',
+                data: new FormData( this ),
+                success: function (res) {
+                  location.reload();
+                },
+                processData: false,
+                contentType: false
+              });
+        } else {
+            $('#error-add-content').css('display', 'block');
+        }
+        e.preventDefault();
+        return false;
+  });
 
     var product_id = <?php echo $product['Product']['id']; ?>;
 

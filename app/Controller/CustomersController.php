@@ -52,6 +52,7 @@ class CustomersController extends AppController {
         }
         if ($this->request->is('POST')) {
             $this->Customer->set($this->request->data);
+            unset($this->Customer->validate['email']['unique']);
             if ($this->Customer->validates()) {
                 if ($this->Auth->login()) {
                     $this->redirect(['action' => 'home']);

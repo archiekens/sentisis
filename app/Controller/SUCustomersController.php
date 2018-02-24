@@ -22,13 +22,12 @@ class SUCustomersController extends AppController {
  * @return void
  */
     public function index() {
-        $paging = 15;
+        $paging = 10;
         $settings = [
-            'limit' => 15,
+            'limit' => 10,
             'fields' => ['*'],
             'paramType' => 'querystring',
             'conditions' => ['deleted' => '0'],
-            'order' => ['id' => 'DESC'],
         ];
 
         $this->Paginator->settings = $settings;
@@ -39,7 +38,7 @@ class SUCustomersController extends AppController {
 
     public function page_ajax() {
         $this->layout = false;
-        $paging = 15;
+        $paging = 10;
         if ($this->request->is('ajax')) {
             $post_cond  = $this->request->data;
 
@@ -84,12 +83,14 @@ class SUCustomersController extends AppController {
  */
     public function add() {
         if ($this->request->is('post')) {
-            $this->Customer->create();
-            if ($this->Customer->save($this->request->data)) {
-                $this->Flash->success(__('The customer has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+            if ($this->Customer->validates($this->request->data)) {
+                $this->Customer->create();
+                if ($this->Customer->save($this->request->data)) {
+                    $this->Flash->success(__('The customer has been saved.'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+                }
             }
         }
     }
@@ -106,11 +107,13 @@ class SUCustomersController extends AppController {
             throw new NotFoundException(__('Invalid customer'));
         }
         if ($this->request->is(array('post', 'put'))) {
-            if ($this->Customer->save($this->request->data)) {
-                $this->Flash->success(__('The customer has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+            if ($this->Customer->validates($this->request->data)) {
+                if ($this->Customer->save($this->request->data)) {
+                    $this->Flash->success(__('The customer has been saved.'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+                }
             }
         } else {
             $options = array('conditions' => array('Customer.' . $this->Customer->primaryKey => $id));
@@ -126,6 +129,7 @@ class SUCustomersController extends AppController {
  * @return void
  */
     public function delete($id = null) {
+        $this->autoRender = false;
         $this->Customer->id = $id;
         if (!$this->Customer->exists()) {
             throw new NotFoundException(__('Invalid customer'));
@@ -136,6 +140,5 @@ class SUCustomersController extends AppController {
         } else {
             $this->Flash->error(__('The customer could not be deleted. Please, try again.'));
         }
-        return $this->redirect(array('action' => 'index'));
     }
 }

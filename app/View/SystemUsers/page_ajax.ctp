@@ -1,27 +1,25 @@
 <?php echo $this->Flash->render(); ?>
 <div class="container-query">
     <div class="main-query">
-        <h2>All Customers</h2>
+        <h2>All System Users</h2>
         <span class="product-count"><?php echo $this->Paginator->counter('Total {:count} items, displaying {:start} - {:end}');?></span>
     </div>
-    <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."SUCustomers/add"; ?>')">Add Customer</button>
+    <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."system_users/add"; ?>')">Add System User</button>
 </div>
-<?php if (count($customers) > 0) : ?>
+<?php if (count($system_users) > 0) : ?>
 <table class="table">
     <tr class="table-row">
         <th class="table-header table-cell">ID</th>
-        <th class="table-header table-cell">Name</th>
-        <th class="table-header table-cell">Email</th>
+        <th class="table-header table-cell">Username</th>
         <th class="table-header table-cell"></th>
         <th class="table-header table-cell"></th>
     </tr>
-    <?php foreach ($customers as $customer) : ?>
+    <?php foreach ($system_users as $system_user) : ?>
     <tr class="table-row">
-        <td class="table-cell"><?php echo $customer['Customer']['id']; ?></td>
-        <td class="table-cell"><?php echo $customer['Customer']['name']; ?></td>
-        <td class="table-cell"><?php echo $customer['Customer']['email']; ?></td>
-        <td class="table-cell"><a href="<?php echo $this->webroot.'SUCustomers/edit/'.$customer['Customer']['id']; ?>">Edit</a></td>
-        <td class="table-cell"><span class="delete-link" onclick="deleteThis('<?php echo $customer['Customer']['id']; ?>')">Delete</span></td>
+        <td class="table-cell"><?php echo $system_user['SystemUser']['id']; ?></td>
+        <td class="table-cell"><?php echo $system_user['SystemUser']['username']; ?></td>
+        <td class="table-cell"><a href="<?php echo $this->webroot.'system_users/edit/'.$system_user['SystemUser']['id']; ?>">Edit</a></td>
+        <td class="table-cell"><span class="delete-link" onclick="deleteThis('<?php echo $system_user['SystemUser']['id']; ?>')">Delete</span></td>
     </tr>
     <?php endforeach; ?>
 </table>
@@ -39,5 +37,5 @@
     ?>
 </ul>
 <?php else : ?>
-    <span>No customers yet</span>
+    <span>No system users yet</span>
 <?php endif; ?>

@@ -115,3 +115,5 @@ CakePlugin::load('DebugKit');
 
 Configure::write('PRODUCT_IMAGE_PATH', WWW_ROOT . 'images' . DS . 'products' . DS);
 Configure::write('IMG_TMP_PATH', WWW_ROOT . 'images' . DS . 'temp' . DS);
+Configure::write('NEG_MAX',1.65);
+Configure::write('POS_MIN',3.31);

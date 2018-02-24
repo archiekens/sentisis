@@ -16,6 +16,10 @@ class Customer extends AppModel {
             'email' => [
                 'rule' => 'email',
                 'message' => 'Please enter a valid email address.'
+            ],
+            'unique' => [
+                'rule' => 'isUnique',
+                'message' => 'This email is already in use.',
             ]
         ],
         'password' => [

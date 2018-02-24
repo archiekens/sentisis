@@ -28,6 +28,11 @@ class SystemUsersController extends AppController {
         ]
     ];
 
+    public $uses = [
+        'Comment',
+        'SystemUser'
+    ];
+
     /**
      * beforeFilder method
      *
@@ -43,7 +48,42 @@ class SystemUsersController extends AppController {
  * @return void
  */
     public function index() {
-        
+        $paging = 10;
+        $settings = [
+            'limit' => 10,
+            'fields' => ['*'],
+            'paramType' => 'querystring',
+            'conditions' => ['deleted' => '0'],
+        ];
+
+        $this->Paginator->settings = $settings;
+        $system_users = $this->Paginator->paginate('SystemUser');
+
+        $this->set(compact('system_users'));
+    }
+
+    public function page_ajax() {
+        $this->layout = false;
+        $paging = 10;
+        if ($this->request->is('ajax')) {
+            $post_cond  = $this->request->data;
+
+            $conditions['SystemUser.deleted'] = 0;
+
+            $settings = [
+                'fields' => ['*'],
+                'paramType' => 'querystring',
+                'conditions' => $conditions,
+                'limit' => $paging
+            ];
+
+            $this->Paginator->settings = $settings;
+            $system_users = $this->Paginator->paginate('SystemUser');
+
+        } else {
+            throw new MethodNotAllowedException();
+        }
+        $this->set(compact('system_users'));
     }
 
 /**
@@ -57,6 +97,7 @@ class SystemUsersController extends AppController {
         }
         if ($this->request->is('POST')) {
             $this->SystemUser->set($this->request->data);
+            unset($this->SystemUser->validate['username']['unique']);
             if ($this->SystemUser->validates()) {
                 if ($this->Auth->login()) {
                     $this->redirect(['action' => 'dashboard']);
@@ -82,7 +123,11 @@ class SystemUsersController extends AppController {
 
         $dataPoints = $this->Rating->getDataPoints();
 
-        $this->set(compact('dataPoints'));
+        $comments = $this->Comment->find('all');
+
+        $comment_count = count($comments);
+
+        $this->set(compact('dataPoints','comment_count'));
  
     }
 
@@ -108,12 +153,12 @@ class SystemUsersController extends AppController {
  */
     public function add() {
         if ($this->request->is('post')) {
-            $this->SystemUser->create();
-            if ($this->SystemUser->save($this->request->data)) {
-                $this->Flash->success(__('The system user has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Flash->error(__('The system user could not be saved. Please, try again.'));
+            if ($this->SystemUser->validates($this->request->data)) {
+                $this->SystemUser->create();
+                if ($this->SystemUser->save($this->request->data)) {
+                    $this->Flash->success(__('The system user has been saved.'));
+                    return $this->redirect(array('action' => 'index'));
+                }
             }
         }
     }
@@ -130,11 +175,13 @@ class SystemUsersController extends AppController {
             throw new NotFoundException(__('Invalid system user'));
         }
         if ($this->request->is(array('post', 'put'))) {
-            if ($this->SystemUser->save($this->request->data)) {
-                $this->Flash->success(__('The system user has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Flash->error(__('The system user could not be saved. Please, try again.'));
+            if ($this->SystemUser->validates($this->request->data)) {
+                if ($this->SystemUser->save($this->request->data)) {
+                    $this->Flash->success(__('The system user has been saved.'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Flash->error(__('The system user could not be saved. Please, try again.'));
+                }
             }
         } else {
             $options = array('conditions' => array('SystemUser.' . $this->SystemUser->primaryKey => $id));
@@ -150,16 +197,21 @@ class SystemUsersController extends AppController {
  * @return void
  */
     public function delete($id = null) {
+        $this->autoRender = false;
         $this->SystemUser->id = $id;
         if (!$this->SystemUser->exists()) {
             throw new NotFoundException(__('Invalid system user'));
         }
+        $system_users = $this->SystemUser->find('all', ['conditions' => ['deleted' => 0]]);
         $this->request->allowMethod('post', 'delete');
-        if ($this->SystemUser->delete()) {
-            $this->Flash->success(__('The system user has been deleted.'));
+        if (count($system_users) > 1) {
+            if ($this->SystemUser->delete()) {
+                $this->Flash->success(__('The system user has been deleted.'));
+            } else {
+                $this->Flash->error(__('The system user could not be deleted. Please, try again.'));
+            }
         } else {
-            $this->Flash->error(__('The system user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('There must be at least one admin.'));
         }
-        return $this->redirect(array('action' => 'index'));
     }
 }

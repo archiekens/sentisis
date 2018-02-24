@@ -12,6 +12,9 @@
         <li class="sidebar-item" id="SUCustomers-index" onclick="window.location.replace('<?php echo $this->webroot."SUCustomers/index"; ?>')">
             <i class="sidebar-item-icon fa fa-users"></i><span class="sidebar-item-name">Customers</span>
         </li>
+        <li class="sidebar-item" id="system_users-index" onclick="window.location.replace('<?php echo $this->webroot."system_users/index"; ?>')">
+            <i class="sidebar-item-icon fa fa-user-secret"></i><span class="sidebar-item-name">System Users</span>
+        </li>
     </ul>
 </aside>
 

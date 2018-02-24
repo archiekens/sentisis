@@ -25,7 +25,7 @@
             <span class="form-error-msg" id="error-email"><?php echo $this->Form->error('Customer.email'); ?></span>
             <?php
                 echo $this->Form->input('password', [
-                    'type'        => 'text',
+                    'type'        => 'password',
                     'error'       => false,
                     'required'    => false,
                     'placeholder' => 'Password',
@@ -34,6 +34,17 @@
                 ]
             ); ?>
             <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('Customer.password'); ?></span>
+            <?php
+                echo $this->Form->input('confirm_password', [
+                    'type'        => 'password',
+                    'error'       => false,
+                    'required'    => false,
+                    'placeholder' => 'Confirm password',
+                    'label'       => false,
+                    'div'         => false,
+                ]
+            ); ?>
+            <span class="form-error-msg" id="error-confirm_password"><?php echo $this->Form->error('Customer.confirm_password'); ?></span>
             <input type="submit" value="Submit">
             <a class="back-to-list-button" onclick="window.location.replace('<?php echo $this->webroot."SUCustomers/index"; ?>')">Back to List</a>
 <?php echo $this->Form->end(); ?>

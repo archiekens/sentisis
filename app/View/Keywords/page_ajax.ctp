@@ -1,5 +1,3 @@
-<?php echo $this->element('SUsidebar'); ?>
-<div class="container-partial container-system-users">
     <?php echo $this->Flash->render(); ?>
     <div class="container-query">
         <div class="main-query">
@@ -32,16 +30,3 @@
     <?php else : ?>
         <span>No keywords yet</span>
     <?php endif; ?>
-</div>
-<script type="text/javascript">
-    function deleteThis(id) {
-        if (confirm('Confirm delete?')) {
-            $.ajax({
-                method: 'POST',
-                url: "<?php echo $this->webroot.'keywords/delete/';?>"+id
-            }).done(function() {
-                location.reload();
-            });
-        }
-    }
-</script>
