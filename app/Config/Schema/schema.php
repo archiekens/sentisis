@@ -41,11 +41,9 @@ class AppSchema extends CakeSchema {
 	public $keywords = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary'),
 		'word' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'type' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false, 'comment' => '0: Neutral, 1:Good, 2:Bad'),
+		'point' => array('type' => 'integer', 'null' => false, 'default' => '3', 'unsigned' => false, 'comment' => '0 to 5'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modififed' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'deleted' => array('type' => 'integer', 'null' => false, 'default' => '0', 'unsigned' => false),
-		'deleted_date' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
