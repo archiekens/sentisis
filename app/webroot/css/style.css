@@ -756,6 +756,7 @@ svg.svg-inline--fa {
 
 .container-system-users-login {
     background-color: #3AAFA9;
+    overflow-y: hidden;
 }
 
 .container-system-users-login .login-form {

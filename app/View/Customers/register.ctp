@@ -1,4 +1,4 @@
-<div class="container-main container-system-users">
+<div class="container-main container-system-users container-system-users-login">
 <img src="<?php echo $this->webroot; ?>img/logo-small.png">
 <?php echo $this->Form->create('Customer', ['class' => 'login-form']); ?>
         <h2 class="login-form-header"><?php echo __('Join us!'); ?></h2>

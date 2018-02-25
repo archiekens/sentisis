@@ -50,7 +50,7 @@
         <div class="comment-add">
             <?php echo $this->Form->create('Comment', ['url' => '../comments/add', 'method' => 'POST']); ?>
             <input type="hidden" name="data[Comment][product_id]" value="<?php echo $product['Product']['id']; ?>">
-            <input type="hidden" name="data[Comment][customer_id]" value="<?php echo AuthComponent::user('id') !== null ? '1' : '1'; ?>">
+            <input type="hidden" name="data[Comment][customer_id]" value="<?php echo AuthComponent::user('id'); ?>">
             <textarea id="comment-add-content" class="comment-add-content" name="data[Comment][content]" maxlength="255"></textarea>
             <span class="form-error-msg" id="error-add-content" style="display: none;">Comment cannot be empty.</span>
             <input type="submit" class="comment-add-submit" value="Submit">

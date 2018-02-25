@@ -50,49 +50,59 @@ class RatingComponent extends Component {
             'fields' => ['content']
         ]);
 
-        $keywords = $keywordsModel->find('list', ['fields' => ['word','point']]);
+        if ($comments) {
+            $keywords = $keywordsModel->find('list', ['fields' => ['word','point']]);
 
-        $total_pos = 0;
-        $total_neu = 0;
-        $total_neg = 0;
-        $total_comments = count($comments);
+            $total_pos = 0;
+            $total_neu = 0;
+            $total_neg = 0;
+            $total_comments = count($comments);
 
-        $maxNeg = Configure::read('NEG_MAX');
-        $minPos = Configure::read('POS_MIN');
+            $maxNeg = Configure::read('NEG_MAX');
+            $minPos = Configure::read('POS_MIN');
 
 
-        foreach ($comments as $comment) {
+            foreach ($comments as $comment) {
 
-            $total_points = 0;
-            $total_keywords = 0;
-            $tokens = $this->_getTokens($comment);
+                $total_points = 0;
+                $total_keywords = 0;
+                $tokens = $this->_getTokens($comment);
 
-            foreach ($tokens as $token) {
-                if (isset($keywords[$token])) {
-                    $total_points += $keywords[$token];
-                    $total_keywords++;
+                foreach ($tokens as $token) {
+                    if (isset($keywords[$token])) {
+                        $total_points += $keywords[$token];
+                        $total_keywords++;
+                    }
+                }
+
+                if ($total_keywords != 0) {
+                    $total_points = $total_points/$total_keywords;
+                }
+
+                if ($total_points <= $maxNeg) {
+                    $total_neg++;
+                } else if ($total_points >= $minPos) {
+                    $total_pos++;
+                } else {
+                    $total_neu++;
                 }
             }
 
-            if ($total_keywords != 0) {
-                $total_points = $total_points/$total_keywords;
-            }
-
-            if ($total_points <= $maxNeg) {
-                $total_neg++;
-            } else if ($total_points >= $minPos) {
-                $total_pos++;
-            } else {
-                $total_neu++;
-            }
+            $dataPoints = [ 
+                ["label"=>"Neutral Comments", "y"=>($total_neu/$total_comments)*100],
+                ["label"=>"Positive Comments", "y"=>($total_pos/$total_comments)*100],
+                ["label"=>"Negative Comments", "y"=>($total_neg/$total_comments)*100]
+                
+            ];
+        } else {
+            $dataPoints = [ 
+                ["label"=>"Neutral Comments", "y"=>0],
+                ["label"=>"Positive Comments", "y"=>0],
+                ["label"=>"Negative Comments", "y"=>0]
+                
+            ];
         }
 
-        $dataPoints = [ 
-            ["label"=>"Neutral Comments", "y"=>($total_neu/$total_comments)*100],
-            ["label"=>"Positive Comments", "y"=>($total_pos/$total_comments)*100],
-            ["label"=>"Negative Comments", "y"=>($total_neg/$total_comments)*100]
-            
-        ];
         return $dataPoints;
     }
 

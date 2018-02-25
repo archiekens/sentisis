@@ -1,6 +1,11 @@
 <?php echo $this->element('SUsidebar'); ?>
 <div class="container-partial container-system-users">
+    <?php if ($comment_count != 0) : ?>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <?php else : ?>
+    <h2>No reviews yet</h2>
+    <span>Come back once there are reviews to view the chart.</span>
+    <?php endif;?>
 </div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
