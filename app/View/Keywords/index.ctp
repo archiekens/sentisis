@@ -8,8 +8,6 @@
         </div>
         <div>
             <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."keywords/add"; ?>')">Add Keyword</button>
-            <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."keywords/download_csv"; ?>')">Download CSV</button>
-            <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."keywords/upload_csv"; ?>')">Upload CSV</button>
         </div>
     </div>
     <?php if (count($keywords) > 0) : ?>
