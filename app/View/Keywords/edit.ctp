@@ -22,7 +22,8 @@
                     'label'       => false,
                     'div'         => false,
                     'min'    => 0,
-                    'max'    => 5
+                    'max'    => 5,
+                    'step'   => 0.01
                 ]
             ); ?>
             <span class="form-error-msg" id="error-point"><?php echo $this->Form->error('Keyword.point'); ?></span>

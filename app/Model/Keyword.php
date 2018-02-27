@@ -6,6 +6,16 @@ App::uses('AppModel', 'Model');
  */
 class Keyword extends AppModel {
 
+    public function beforeSave($options = array()) {
+
+        if (!empty($this->data['Keyword']['word'])) {
+
+            $this->data['Keyword']['word'] = strtolower($this->data['Keyword']['word']);
+            $this->data['Keyword']['point'] = !empty($this->data['Keyword']['point']) ? $this->data['Keyword']['point'] : 2.5;
+        }
+        return true;
+    }
+
     public $validate = [
         'word' => [
             'required' => [

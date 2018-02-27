@@ -15,13 +15,6 @@ class KeywordsController extends AppController {
  */
     public $components = ['Paginator', 'Csv'];
 
-    public function beforeSave($options = array()) {
-        if (!empty($this->data['Keyword']['word'])) {
-
-            $this->data['Keyword']['word'] = strtolower($this->data['Keyword']['word']);
-        }
-        return true;
-    }
 
 /**
  * index method
