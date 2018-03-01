@@ -524,8 +524,17 @@ svg.svg-inline--fa {
     max-height: 50px;
 }
 
-.header-logout {
+.header-right {
+    display: flex;
+    flex-direction: row;
     margin-left: auto;
+}
+
+.header-right-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
 }
 
 /*SIDEBAR STYLES*/
@@ -864,4 +873,23 @@ svg.svg-inline--fa {
 
 .file-button:hover {
     background-color: #378F8A;
+}
+
+/*ABOUT STYLES*/
+.about-header {
+    color: #DEF2F1;
+    font-size: 36px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.about-description {
+    color: #DEF2F1;
+    max-width: 500px;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.about-logo {
+    margin-top: 80px;
 }

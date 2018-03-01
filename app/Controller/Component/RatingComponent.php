@@ -4,6 +4,12 @@ App::uses('Component', 'Controller');
 
 class RatingComponent extends Component {
 
+    public $negPrefixList = [
+        'aren\'t',
+        'isn\'t',
+        'not'
+    ];
+
     public function updateRating($id = null) {
 
         $commentModel = ClassRegistry::init('Comment');
@@ -21,6 +27,15 @@ class RatingComponent extends Component {
         $total_keywords = 0;
 
         foreach ($comments as $comment) {
+            //For each negative prefix in the list
+            foreach ($this->negPrefixList as $negPrefix) {
+
+                //Search if that prefix is in the document
+                if (strpos($comment, $negPrefix) !== false) {
+                    //Reove the white space after the negative prefix
+                    $comment = str_replace($negPrefix . ' ', $negPrefix, $comment);
+                }
+            }
 
             $tokens = $this->_getTokens($comment);
 
@@ -63,6 +78,16 @@ class RatingComponent extends Component {
 
 
             foreach ($comments as $comment) {
+
+                //For each negative prefix in the list
+                foreach ($this->negPrefixList as $negPrefix) {
+
+                    //Search if that prefix is in the document
+                    if (strpos($comment, $negPrefix) !== false) {
+                        //Reove the white space after the negative prefix
+                        $comment = str_replace($negPrefix . ' ', $negPrefix, $comment);
+                    }
+                }
 
                 $total_points = 0;
                 $total_keywords = 0;

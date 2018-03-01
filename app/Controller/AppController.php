@@ -57,7 +57,7 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeFilter() {
-        $this->Auth->allow('register');
+        $this->Auth->allow('register','display');
         $page_type = 1; //1 : admin, 2: customer
         $controller_action = $this->request->params['action'];
         $controller_controller = $this->request->params['controller'];
@@ -72,6 +72,8 @@ class AppController extends Controller {
             case 'comments':
                 $page_type = 2;
                 break;
+            case 'pages':
+                $page_type = 2;
         }
 
         if ($page_type == 1) {

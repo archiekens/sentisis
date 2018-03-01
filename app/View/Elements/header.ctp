@@ -5,9 +5,14 @@
         <?php if (AuthComponent::user('id') !== null) : ?>
         <li class="header-item header-greeting">Hello, <?php echo $page_type == 1 ? AuthComponent::user('username') : (AuthComponent::user('name') != '' ? AuthComponent::user('name') : 'Guest'); ?></li>
         <?php endif; ?>
-        <?php if (AuthComponent::user('id') !== null) : ?>
-        <li class="header-item header-logout"><a href="<?php echo $this->webroot;?><?php echo $page_type == 1 ? 'system_users/logout' : 'customers/logout';?>">Logout</a></li>
-        <?php endif; ?>
+        <li class="header-item header-right">
+        	<?php if ($page_type == 2): ?>
+        	<a class="header-right-link" href="<?php echo $this->webroot.'pages/about';?>">About Us</a>
+	        <?php endif; ?>
+	        <?php if (AuthComponent::user('id') !== null) : ?>
+	        <a class="header-right-link" href="<?php echo $this->webroot;?><?php echo $page_type == 1 ? 'system_users/logout' : 'customers/logout';?>">Logout</a>
+	        <?php endif; ?>
+	    </li>
     </ul>
 </header>
 <?php endif; ?>
