@@ -7,10 +7,10 @@
         <?php endif; ?>
         <li class="header-item header-right">
         	<?php if ($page_type == 2): ?>
-        	<a class="header-right-link" href="<?php echo $this->webroot.'pages/about';?>">About Us</a>
+        	<a class="header-right-link" href="<?php echo $this->webroot.'pages/about';?>">About Us<i class="fa fa-info-circle"></i></a>
 	        <?php endif; ?>
 	        <?php if (AuthComponent::user('id') !== null) : ?>
-	        <a class="header-right-link" href="<?php echo $this->webroot;?><?php echo $page_type == 1 ? 'system_users/logout' : 'customers/logout';?>">Logout</a>
+	        <a class="header-right-link" href="<?php echo $this->webroot;?><?php echo $page_type == 1 ? 'system_users/logout' : 'customers/logout';?>">Logout<i class="fa fa-share-square"></i></a>
 	        <?php endif; ?>
 	    </li>
     </ul>

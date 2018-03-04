@@ -6,6 +6,10 @@
             <h2>All Products</h2>
             <span class="product-count"><?php echo $this->Paginator->counter('Total {:count} items, displaying {:start} - {:end}');?></span>
         </div>
+        <div class="search-query">
+            <input type="text" id="product_name" placeholder="Search product name">
+            <button id="search-submit" class="search-button"><i class="fa fa-search"></i></button>
+        </div>
         <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."SUProducts/add"; ?>')">Add Product</button>
     </div>
     <?php if (count($products) > 0) : ?>
@@ -82,15 +86,22 @@
             }
         });
 
+        $(document).delegate('#search-submit', 'click',function(e){
+            page_number = 0;
+            showPage();
+        });
+
         function showPage() {
+            let product_name = $('#product_name').val();
             $.ajax({
                 url: '<?php echo $this->webroot;?>SUProducts/page_ajax?page='+page_number,
                 method: 'POST',
+                data: {
+                    product_name : product_name
+                },
                 success: function (res) {
                     $('#productContainer').empty().append(res)
-                },
-                processData: false,
-                contentType: false
+                }
             });
         };
 

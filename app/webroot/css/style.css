@@ -507,7 +507,7 @@ svg.svg-inline--fa {
     min-height: 95px;
     width: 100vw;
     max-width: 100%;
-    padding: 10px 30px;
+    padding: 0px 30px;
     list-style-type: none;
     background-color: #17252A;
 }
@@ -528,13 +528,25 @@ svg.svg-inline--fa {
     display: flex;
     flex-direction: row;
     margin-left: auto;
+    padding: 0px 10px;
 }
 
 .header-right-link {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    padding: 0px 20px;
     margin-left: 20px;
+}
+
+.header-right-link .svg-inline--fa{
+    margin-left: 10px;
+}
+
+.header-right-link:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #3AAFA9;
 }
 
 /*SIDEBAR STYLES*/
@@ -832,9 +844,22 @@ svg.svg-inline--fa {
 
 .container-system-users .container-query {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 50px;
+}
+
+.search-query {
+    align-self: flex-end;
+}
+
+.search-query input[type=text] {
+    width: 250px;
+}
+
+.search-button .svg-inline--fa {
+    margin-right: 0px;
 }
 
 .list-add-button {

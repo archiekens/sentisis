@@ -45,6 +45,11 @@ class SUProductsController extends AppController {
 
             $conditions['Product.deleted'] = 0;
 
+            if (isset($post_cond['product_name']) && $post_cond['product_name'] != '') {
+                $conditions['Product.name LIKE'] = '%'.$post_cond['product_name'].'%';
+                $this->set('product_name', $post_cond['product_name']);
+            }
+
             $settings = [
                 'fields' => ['*'],
                 'paramType' => 'querystring',

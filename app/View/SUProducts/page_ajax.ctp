@@ -3,6 +3,10 @@
         <h2>All Products</h2>
         <span class="product-count"><?php echo $this->Paginator->counter('Total {:count} items, displaying {:start} - {:end}');?></span>
     </div>
+    <div class="search-query">
+        <input type="text" id="product_name" placeholder="Search product name" value="<?php echo isset($product_name) ? $product_name : ''; ?>">
+        <button id="search-submit" class="search-button"><i class="fa fa-search"></i></button>
+    </div>
     <button class="list-add-button" onclick="window.location.replace('<?php echo $this->webroot."SUProducts/add"; ?>')">Add Product</button>
 </div>
 <?php if (count($products) > 0) : ?>
