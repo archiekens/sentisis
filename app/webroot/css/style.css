@@ -619,7 +619,7 @@ svg.svg-inline--fa {
     display: flex;
 }
 
-.view-product-details *{
+.view-product-details>*{
     display: flex;
     margin-right: 15px;
 }
@@ -649,6 +649,7 @@ svg.svg-inline--fa {
 .view-product-rating-container {
     display: flex;
     flex-direction: column;
+    min-width: 250px;
     margin-left: auto;
     margin-right: 0;
     padding-left: 30px;
@@ -660,7 +661,7 @@ svg.svg-inline--fa {
 }
 
 .view-product-rating-image{
-    height: 38px;
+    height: 42px;
     background:
         linear-gradient(90deg, #EDEB15 0%, #EDEB15 0%,rgba(0,0,0,0) 0%),
         url('../img/rating-small.png');
@@ -696,6 +697,7 @@ svg.svg-inline--fa {
     justify-content: space-between;
     color: #666666;
     font-size: 12px;
+    margin-bottom: 10px;
 }
 
 .comment-date {
@@ -704,6 +706,19 @@ svg.svg-inline--fa {
 
 .comment-lower {
     display: flex;
+}
+
+.comment .fa-circle {
+    font-size: 0.8em;
+    color: #999999;
+}
+
+.comment .fa-thumbs-down {
+    color: #2B7A78;
+}
+
+.comment .fa-thumbs-up {
+    color: #3AAFA9;
 }
 
 .comment-content {

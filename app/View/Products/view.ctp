@@ -37,6 +37,15 @@
                     <span class="comment-date"><?php echo $comment['Comment']['created']; ?></span>
                 </div>
                 <div class="comment-lower">
+                    <div class="comment-category">
+                        <?php if ($comment['Comment']['category'] == 'pos') : ?>
+                            <i class="fa fa-thumbs-up"></i>
+                        <?php elseif ($comment['Comment']['category'] == 'neg') : ?>
+                            <i class="fa fa-thumbs-down"></i>
+                        <?php else : ?>
+                            <i class="fa fa-circle"></i>
+                        <?php endif; ?>
+                    </div>
                     <p class="comment-content"><?php echo $comment['Comment']['content']; ?></p>
                     <?php if (AuthComponent::user('id') == $comment['Customer']['id']) : ?>
                     <div class="comment-options-container" data-id="<?php echo $comment['Comment']['id']; ?>" data-content="<?php echo $comment['Comment']['content']; ?>">

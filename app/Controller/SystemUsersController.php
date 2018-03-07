@@ -121,13 +121,11 @@ class SystemUsersController extends AppController {
  */
     public function dashboard() {
 
-        $dataPoints = $this->Rating->getDataPoints();
+        $data = $this->Rating->getDataPoints();
 
-        $comments = $this->Comment->find('all');
+        $dataPoints = $data['dataPoints'];
 
-        $comment_count = count($comments);
-
-        $this->set(compact('dataPoints','comment_count'));
+        $this->set(compact('dataPoints', 'data'));
  
     }
 

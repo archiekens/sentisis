@@ -1,7 +1,18 @@
 <?php echo $this->element('SUsidebar'); ?>
 <div class="container-partial container-system-users">
-    <?php if ($comment_count != 0) : ?>
+    <?php if ($data['total_comments'] != 0) : ?>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <div class="chart-info">
+        <div class="chart-info-count">
+            <strong>Total Number of Positive Comments: </strong><span><?php echo $data['total_pos']; ?> comments</span>
+        </div>
+        <div class="chart-info-count">
+            <strong>Total Number of Neutral Comments: </strong><span><?php echo $data['total_neu']; ?> comments</span>
+        </div>
+        <div class="chart-info-count">
+            <strong>Total Number of Negative Comments: </strong><span><?php echo $data['total_neg']; ?> comments</span>
+        </div>
+    </div>
     <?php else : ?>
     <h2>No reviews yet</h2>
     <span>Come back once there are reviews to view the chart.</span>
@@ -16,7 +27,7 @@
                 text: "Comment Rating Percentages"
             },
             subtitles: [{
-                text: "Out of <?php echo $comment_count;?> comments on <?php echo date('F j, Y'); ?>"
+                text: "Out of <?php echo $data['total_comments'];?> comments on <?php echo date('F j, Y'); ?>"
             }],
             data: [{
                 type: "pie",

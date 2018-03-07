@@ -56,6 +56,52 @@ class RatingComponent extends Component {
 
     }
 
+    public function categorizeComment($comment) {
+        $keywords = Cache::read('keywords','short');
+
+        if (empty($keywords)) {
+            $keywordsModel = ClassRegistry::init('Keyword');
+            $keywords = $keywordsModel->find('list', ['fields' => ['word','point']]);
+            Cache::write('keywords', $keywords, 'short');   
+        }
+
+        $total_points = 0;
+        $total_keywords = 0;
+
+        //For each negative prefix in the list
+        foreach ($this->negPrefixList as $negPrefix) {
+
+            //Search if that prefix is in the document
+            if (strpos($comment, $negPrefix) !== false) {
+                //Reove the white space after the negative prefix
+                $comment = str_replace($negPrefix . ' ', $negPrefix, $comment);
+            }
+        }
+
+        $tokens = $this->_getTokens($comment);
+
+        foreach ($tokens as $token) {
+            if (isset($keywords[$token])) {
+                $total_points += $keywords[$token];
+                $total_keywords++;
+            }
+        }
+
+        if ($total_keywords != 0) {
+            $total_points = $total_points/$total_keywords;
+            if ($total_points <= Configure::read('NEG_MAX')) {
+                return "neg";
+            } else if ($total_points >= Configure::read('POS_MIN')) {
+                return "pos";
+            } else {
+                return "neu";
+            }
+        } else {
+            return "neu";
+        }
+
+    }
+
     public function getDataPoints() {
         $commentModel = ClassRegistry::init('Comment');
         $keywordsModel = ClassRegistry::init('Keyword');
@@ -113,14 +159,19 @@ class RatingComponent extends Component {
                 }
             }
 
-            $dataPoints = [ 
+            $data['total_neg'] = $total_neg;
+            $data['total_pos'] = $total_pos;
+            $data['total_neu'] = $total_neu;
+            $data['total_comments'] = $total_comments;
+
+            $data['dataPoints'] = [ 
                 ["label"=>"Neutral Comments", "y"=>($total_neu/$total_comments)*100],
                 ["label"=>"Positive Comments", "y"=>($total_pos/$total_comments)*100],
                 ["label"=>"Negative Comments", "y"=>($total_neg/$total_comments)*100]
                 
             ];
         } else {
-            $dataPoints = [ 
+            $data['dataPoints'] = [ 
                 ["label"=>"Neutral Comments", "y"=>0],
                 ["label"=>"Positive Comments", "y"=>0],
                 ["label"=>"Negative Comments", "y"=>0]
@@ -128,7 +179,7 @@ class RatingComponent extends Component {
             ];
         }
 
-        return $dataPoints;
+        return $data;
     }
 
     /**

@@ -13,7 +13,7 @@ class ProductsController extends AppController {
  *
  * @var array
  */
-    public $components = array('Paginator');
+    public $components = ['Paginator', 'Rating'];
 
     public $uses = ['Comment', 'Product'];
 
@@ -57,6 +57,13 @@ class ProductsController extends AppController {
             'order' => ['created' => 'DESC']
 
         ]);
+        $tmp_comments = $comments;
+        $comments = [];
+
+        foreach ($tmp_comments as $key => $tmp_comment) {
+            $comments[$key] = $tmp_comment;
+            $comments[$key]['Comment']['category'] = $this->Rating->categorizeComment($tmp_comment['Comment']['content']);
+        }
 
         $this->set(compact('comments'));
     }
