@@ -12,9 +12,10 @@
         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
     <div class="container-sub container-half container-half-right">
-            <?php echo $this->Form->create('Customer', ['class' => 'login-form']) ?>
+            <?php echo $this->Form->create('Customer', ['class' => 'login-form login-form-dark']) ?>
             <?php echo $this->Flash->render(); ?>
-            <h2 class="login-form-header">Sign in here</h2>
+            <h2 class="login-form-header">SIGN IN</h2>
+            <div class="input-container">
             <?php
                 echo $this->Form->input('email', [
                     'type'        => 'text',
@@ -25,7 +26,10 @@
                     'div'         => false,
                 ]
             ); ?>
+            <i class="fa fa-user"></i>
+            </div>
             <span class="form-error-msg" id="error-email"><?php echo $this->Form->error('Customer.email'); ?></span>
+            <div class="input-container">
             <?php
                 echo $this->Form->input('password', [
                     'type'        => 'password',
@@ -36,6 +40,8 @@
                     'div'         => false,
                 ]
             ); ?>
+            <i class="fa fa-key"></i>
+            </div>
             <span class="form-error-msg" id="error-password"><?php echo $this->Form->error('Customer.password'); ?></span>
             <input type="submit" value="Login">
             <a class="back-to-list-button" href="<?php echo $this->webroot;?>customers/register">Register</a>

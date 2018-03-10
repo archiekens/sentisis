@@ -12,6 +12,10 @@
             </select>
         </li>
         <li class="sidebar-item">
+            <h4 class="sidebar-item-header">Product Name</h4>
+            <input type="text" id="product_name" name="data[Product][name]" placeholder="Search product name">
+        </li>
+        <li class="sidebar-item">
             <h4 class="sidebar-item-header">Brand</h4>
             <ul class="sidebar-item-options">
                 <?php foreach ($brands as $brand): ?>
@@ -59,47 +63,33 @@
     </ul>
 </aside>
 <?php echo $this->Form->end(); ?>
-<div class="container-partial container-home" id="productContainer">
+<div class="container-partial container-home">
     <div class="product-query">
         <h2 id="product-query-type">All Devices</h2>
-        <span class="product-count"><?php echo $this->Paginator->counter('{:count} items');?></span>
+        <span class="product-count" id="product_count"><?php echo $this->Paginator->counter('{:count} items found');?></span>
     </div>
-    <ul class="pagination pull-right pagination-sort__pages">
-        <?php
-            echo $this->Paginator->first(__('first page'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            if ($this->Paginator->hasPrev()) {
-                echo $this->Paginator->prev(__('prev'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            }
-            echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' => 'active','tag' => 'li' , 'data-class' => 'page_ajax'));
-            if ($this->Paginator->hasNext()) {
-                echo $this->Paginator->next(__('next'), array('tag' => 'li','currentClass' => 'disabled', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            }
-            echo $this->Paginator->last(__('last'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-        ?>
-    </ul>
-    <div class="product-container">
+    <div class="product-container" id="productContainer">
         <?php foreach ($products as $product) : ?>
             <div class="product" onclick="window.location.replace('<?php echo $this->webroot."products/view/".$product["Product"]["id"]; ?>')">
                 <img class="product-image" src="<?php echo $this->webroot.($product['Product']['image'] !='' ? 'images/products/'.$product['Product']['image'] : 'img/product-default.jpg'); ?>" onerror="this.src = '<?php echo $this->webroot; ?>img/product-default.jpg'">
                 <span class="product-name"><?php echo $product['Product']['name']; ?></span>
                 <span class="product-brand"><?php echo $product['Product']['brand']; ?></span>
+                <span class="product-rating">
+                    <span class="product-rating-actual">
+                        <?php for ($i = 0; $i <= $product['Product']['rating']; $i++) {
+                            if ($product['Product']['rating'] - $i >= 1) {
+                                echo '<i class="fa fa-star"></i>';
+                            } elseif ($product['Product']['rating'] - $i > 0) {
+                                echo '<i class="fa fa-star-half"></i>';
+                            }
+                        }?>
+                    </span>
+                    <span class="product-rating-background"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>
+                </span>
                 <button class="product-view">View</button>
             </div>
         <?php endforeach; ?>
     </div>
-    <ul class="pagination pull-right pagination-sort__pages">
-        <?php
-            echo $this->Paginator->first(__('first page'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            if ($this->Paginator->hasPrev()) {
-                echo $this->Paginator->prev(__('prev'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            }
-            echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' => 'active','tag' => 'li' , 'data-class' => 'page_ajax'));
-            if ($this->Paginator->hasNext()) {
-                echo $this->Paginator->next(__('next'), array('tag' => 'li','currentClass' => 'disabled', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-            }
-            echo $this->Paginator->last(__('last'), array('tag' => 'li', 'data-class' => 'page_ajax'), null, array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
-        ?>
-    </ul>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -116,15 +106,6 @@
             return urlParams;
         }
 
-        $(document).delegate('a', 'click',function(e){
-            if ($(this).data('class') == 'page_ajax') {
-                let page = parseQueryString($(this).attr('href'))['page'];
-                page_number = page;
-                $("#ProductHomeForm").submit();
-                e.preventDefault();
-            }
-        });
-
         $('.check-brand').change(function() {
             let brands = [];
             $('.check-brand').each(function() {
@@ -133,14 +114,26 @@
                 }
             });
             $('#brand_array').val(brands);
+            page_number = 1;
+            $('#productContainer').empty();
             $("#ProductHomeForm").submit();
         });
 
         $(document).delegate('[type=radio]', 'change ', function () {
+            page_number = 1;
+            $('#productContainer').empty();
             $("#ProductHomeForm").submit();
         });
 
         $(document).delegate('[id=device-type]', 'keyup change ', function () {
+            page_number = 1;
+            $('#productContainer').empty();
+            $("#ProductHomeForm").submit();
+        });
+
+        $(document).delegate('[id=product_name]', 'keyup change ', function () {
+            page_number = 1;
+            $('#productContainer').empty();
             $("#ProductHomeForm").submit();
         });
 
@@ -150,31 +143,29 @@
                 method: 'POST',
                 data: new FormData( this ),
                 success: function (res) {
-                    $('#productContainer').empty().append(res)
+                    $('#productContainer').append(res)
                 },
                 processData: false,
                 contentType: false
             }).then(function() {
                 let type = null;
-                if ($('#device-type').val() !== null) {
+                if ($('#device-type').val() != "null") {
                     type = parseInt($('#device-type').val()) + 1;
+                    $("#product-query-type")[0].innerText = $('#device-type')[0][type].innerText;
+                } else {
+                    $("#product-query-type")[0].innerText = 'All Devices';
                 }
-                $("#product-query-type")[0].innerText = $('#device-type')[0][type].innerText;
+                $("#product_count")[0].innerText = $('#result_count'+page_number).val() + ' items found';
             });
             e.preventDefault();
             return false;
         });
 
-        $("#clearBtn").on('click',function() {
-            $.ajax({
-                url: '/customers/page_ajax?page=1',
-                method: 'POST',
-                success: function (res) {
-                    $('#productContainer').empty().append(res)
-                },
-            processData: false,
-            contentType: false
-            });
+        $(window).scroll(function() {
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                page_number++;
+                $("#ProductHomeForm").submit();
+            }
         });
 
     });

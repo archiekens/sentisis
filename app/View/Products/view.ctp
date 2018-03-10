@@ -28,47 +28,57 @@
             </div>
         </div>
     </div>
-    <div class="container-comments">
-        <h2 class="container-product-header">Comments about this product</h2>
-        <?php foreach ($comments as $comment) : ?>
-            <div class="comment">
-                <div class="comment-upper">
-                    <span class="comment-customer">By <?php echo $comment['Customer']['name']; ?></span>  
-                    <span class="comment-date"><?php echo $comment['Comment']['created']; ?></span>
-                </div>
-                <div class="comment-lower">
-                    <div class="comment-category">
-                        <?php if ($comment['Comment']['category'] == 'pos') : ?>
-                            <i class="fa fa-thumbs-up"></i>
-                        <?php elseif ($comment['Comment']['category'] == 'neg') : ?>
-                            <i class="fa fa-thumbs-down"></i>
-                        <?php else : ?>
-                            <i class="fa fa-circle"></i>
+    <div class="container-product-view-lower">
+        <div class="container-comments">
+            <h2 class="container-product-header">Comments about this product</h2>
+            <?php foreach ($comments as $comment) : ?>
+                <div class="comment">
+                    <div class="comment-upper">
+                        <span class="comment-customer">By <?php echo $comment['Customer']['name']; ?></span>  
+                        <span class="comment-date"><?php echo $comment['Comment']['created']; ?></span>
+                    </div>
+                    <div class="comment-lower">
+                        <div class="comment-category">
+                            <?php if ($comment['Comment']['category'] == 'pos') : ?>
+                                <i class="fa fa-thumbs-up"></i>
+                            <?php elseif ($comment['Comment']['category'] == 'neg') : ?>
+                                <i class="fa fa-thumbs-down"></i>
+                            <?php else : ?>
+                                <i class="fa fa-circle"></i>
+                            <?php endif; ?>
+                        </div>
+                        <p class="comment-content"><?php echo $comment['Comment']['content']; ?></p>
+                        <?php if (AuthComponent::user('id') == $comment['Customer']['id']) : ?>
+                        <div class="comment-options-container" data-id="<?php echo $comment['Comment']['id']; ?>" data-content="<?php echo $comment['Comment']['content']; ?>">
+                            <i class="fa fa-edit" onclick="toggleModal(true, this)"></i>
+                            <i class="fa fa-trash-alt" onclick="deleteThis('<?php echo $comment['Comment']['id']; ?>')"></i>
+                        </div>
                         <?php endif; ?>
                     </div>
-                    <p class="comment-content"><?php echo $comment['Comment']['content']; ?></p>
-                    <?php if (AuthComponent::user('id') == $comment['Customer']['id']) : ?>
-                    <div class="comment-options-container" data-id="<?php echo $comment['Comment']['id']; ?>" data-content="<?php echo $comment['Comment']['content']; ?>">
-                        <i class="fa fa-edit" onclick="toggleModal(true, this)"></i>
-                        <i class="fa fa-trash-alt" onclick="deleteThis('<?php echo $comment['Comment']['id']; ?>')"></i>
-                    </div>
-                    <?php endif; ?>
                 </div>
+            <?php endforeach; ?>
+            <div class="comment-add">
+                <?php echo $this->Form->create('Comment', ['url' => '../comments/add', 'method' => 'POST']); ?>
+                <input type="hidden" name="data[Comment][product_id]" value="<?php echo $product['Product']['id']; ?>">
+                <input type="hidden" name="data[Comment][customer_id]" value="<?php echo AuthComponent::user('id'); ?>">
+                <textarea id="comment-add-content" class="comment-add-content" name="data[Comment][content]" maxlength="255"></textarea>
+                <span class="form-error-msg" id="error-add-content" style="display: none;">Comment cannot be empty.</span>
+                <input type="submit" class="comment-add-submit" value="Submit">
+                <?php echo $this->Form->end(); ?>
             </div>
-        <?php endforeach; ?>
-        <div class="comment-add">
-            <?php echo $this->Form->create('Comment', ['url' => '../comments/add', 'method' => 'POST']); ?>
-            <input type="hidden" name="data[Comment][product_id]" value="<?php echo $product['Product']['id']; ?>">
-            <input type="hidden" name="data[Comment][customer_id]" value="<?php echo AuthComponent::user('id'); ?>">
-            <textarea id="comment-add-content" class="comment-add-content" name="data[Comment][content]" maxlength="255"></textarea>
-            <span class="form-error-msg" id="error-add-content" style="display: none;">Comment cannot be empty.</span>
-            <input type="submit" class="comment-add-submit" value="Submit">
-            <?php echo $this->Form->end(); ?>
+            <?php if (count($comments) == 0 ) : ?>
+                <span class="comment-empty-msg">No comments for this product yet.</span>
+            <?php endif; ?>
         </div>
-        <?php if (count($comments) == 0 ) : ?>
-            <span class="comment-empty-msg">No comments for this product yet.</span>
-        <?php endif; ?>
+        <div class="container-ratings">
+            <h2 class="container-product-header">Reactions for this product</h2>
+            <div class="container-ratings-sub">
+                <div class="ratings ratings-pos"><span><?php echo $ratings['pos']; ?>%<br>Happy</span></div>
+                <div class="ratings ratings-neg"><span><?php echo $ratings['neg']; ?>%<br>Sad</span></div>
+            </div>
+        </div>
     </div>
+    
 </div>
 
 <script type="text/javascript">

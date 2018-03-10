@@ -117,6 +117,13 @@ class CustomersController extends AppController {
                 $this->set('rating', $post_cond['Product']['rating']);
             }
 
+            if (isset($post_cond['Product']['name']) && $post_cond['Product']['name'] != '') {
+                $conditions['Product.name LIKE'] = '%'.$post_cond['Product']['name'].'%';
+            }
+
+            $count = $this->Product->find('count', ['conditions' => $conditions]);
+            $page = $this->request->query['page'];
+            $this->set(compact('count', 'page'));
             $settings = [
                 'fields' => ['*'],
                 'paramType' => 'querystring',

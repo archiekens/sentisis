@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Yantramanav');
 
 /*GENERAL STYLES*/
 * {
@@ -330,6 +330,76 @@ svg.svg-inline--fa {
     margin: 0px;
 }
 
+/*LOGIN FORM DARK*/
+
+.login-form-dark {
+    background-color: #141414;
+}
+
+.login-form-dark .login-form-header {
+    font-family: 'Yantramanav';
+    font-weight: bold;
+    font-size: 36px;
+    color: #E6E6E6;
+    border: none;
+}
+
+.login-form-dark .login-form-header:before {
+    content: "\a0";
+    display: block;
+    position: absolute;
+    margin-left: -20px;
+    padding: 2px 0;
+    line-height: 36px;
+    border-left: 10px solid #E64E25; 
+}
+
+.login-form-dark .input-container {
+    position: relative;
+    width: 100%;
+}
+
+.login-form-dark input[type=text], .login-form-dark input[type=password]{
+    color: #E6E6E6;
+    background-color: #262626;
+    width: 100%;
+}
+
+.login-form-dark .input-container .svg-inline--fa {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    color: #E6E6E6;
+}
+
+/* Change Autocomplete styles in Chrome*/
+.login-form-dark input:-webkit-autofill,
+.login-form-dark input:-webkit-autofill:hover, 
+.login-form-dark input:-webkit-autofill:focus
+.login-form-dark input:-webkit-autofill {
+  border: none;
+  -webkit-text-fill-color: #E6E6E6;
+  background-color: #262626;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-form-dark input[type=submit] {
+    background-color: #E64E25;
+}
+
+.login-form-dark input[type=submit]:hover {
+    background-color: #CA4521;
+}
+
+.login-form-dark .back-to-list-button {
+    background-color: #C33A1F;
+}
+
+.login-form-dark .back-to-list-button:hover {
+    background-color: #A2301A;
+}
+
 /*NAVBAR STYLES*/
 .container-nav {
     height: 100vh;
@@ -437,7 +507,7 @@ svg.svg-inline--fa {
     opacity: 1;
 }
 
-.product * {
+.product>* {
     margin-top: 5px;
     margin-left: 10px;
     width: 170px;
@@ -452,10 +522,26 @@ svg.svg-inline--fa {
 }
 
 .product-rating {
-    height: 15px;
-    background-size: contain;
-    background-image: url(../img/rating-small.png);
-    background-repeat: no-repeat;
+    display: block;
+    position: relative;
+    height: 22px;
+}
+
+.product-rating .svg-inline--fa{
+    font-size: 14px;
+    margin: 0px;
+}
+
+.product-rating-actual {
+    position: relative;
+    z-index: 2;
+    color: #3AAFA9;
+}
+
+.product-rating-background {
+    position: absolute;
+    color: #D9D9D9;
+    left: 0px;
 }
 
 .product-brand {
@@ -600,7 +686,7 @@ svg.svg-inline--fa {
     background-color: #F4F3F3;
 }
 
-.container-product-view-sub, .container-comments {
+.container-product-view-sub, .container-comments, .container-ratings {
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
@@ -678,6 +764,11 @@ svg.svg-inline--fa {
 
 .container-product-view-main .view-back-button .svg-inline--fa{
     margin-top: 3px;
+}
+
+.container-product-view-lower {
+    display: flex;
+    justify-content: space-between;
 }
 
 .container-comments{
@@ -760,6 +851,46 @@ svg.svg-inline--fa {
 
 .comment-add-submit {
     align-self: flex-end;
+}
+
+.container-ratings {
+    display: flex;
+    width: 26vw;
+    background-color: white;
+}
+
+.container-ratings-sub {
+    display: flex;
+    justify-content: center;
+}
+
+.ratings {
+    position: relative;
+    height: 120px;
+    width: 120px;
+    text-align: center;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.ratings:first-child {
+    margin-right: 20px;
+}
+
+.ratings-pos {
+    background-color: #3AAFA9;
+}
+
+.ratings-neg {
+    background-color: #2B7A78;
+}
+
+.ratings span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /*SYSTEM USER GENERAL STYLES*/

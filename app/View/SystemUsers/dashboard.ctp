@@ -30,7 +30,7 @@
                 text: "Out of <?php echo $data['total_comments'];?> comments on <?php echo date('F j, Y'); ?>"
             }],
             data: [{
-                type: "pie",
+                type: "column",
                 yValueFormatString: "#,##0.00\"%\"",
                 indexLabel: "{label} ({y})",
                 dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>

@@ -33,7 +33,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         echo $this->fetch('css');
         echo $this->fetch('script');
     ?>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script defer src="<?php echo $this->webroot; ?>js/fontawesome-all.js"></script>
     <script type="text/javascript" src="<?php echo $this->webroot; ?>js/jquery-3.3.1.min.js"></script>
 </head>
 <body>

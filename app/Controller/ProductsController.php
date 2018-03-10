@@ -60,12 +60,30 @@ class ProductsController extends AppController {
         $tmp_comments = $comments;
         $comments = [];
 
+        $ratings = [
+            'pos' => 0,
+            'neg' => 0
+        ];
+
+        $total_pos_neg = 0;
         foreach ($tmp_comments as $key => $tmp_comment) {
             $comments[$key] = $tmp_comment;
             $comments[$key]['Comment']['category'] = $this->Rating->categorizeComment($tmp_comment['Comment']['content']);
+            if ($comments[$key]['Comment']['category'] == 'pos') {
+                $ratings['pos']++;
+                $total_pos_neg++;
+            } elseif ($comments[$key]['Comment']['category'] == 'neg') {
+                $ratings['neg']++;
+                $total_pos_neg++;
+            }
         }
 
-        $this->set(compact('comments'));
+        if ($total_pos_neg > 0) {
+            $ratings['pos'] = ($ratings['pos']/$total_pos_neg)*100;
+            $ratings['neg'] = ($ratings['neg']/$total_pos_neg)*100;
+        }
+
+        $this->set(compact('comments','ratings'));
     }
 
 }
