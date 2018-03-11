@@ -12,19 +12,19 @@
     <div class="container-product-view-sub">
         <h2 class="container-product-header"><?php echo $product['Product']['name']; ?></h2>
         <div class="view-product-details">
-            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['image']; ?>" onerror="this.src = '<?php echo $this->webroot; ?>img/product-default.jpg'">
-            <div class="view-product-info">
-                <h4 class="view-product-info-header">Product Information</h4>
-                <p class="view-product-type"><strong>Type : </strong><?php echo $product_types[$product['Product']['type']]; ?></p>
-                <p class="view-product-brand"><strong>Brand : </strong><?php echo $product['Product']['brand']; ?></p>
-                <p class="view-product-description"><strong>Description :</strong><?php echo $product['Product']['description']; ?></p>
-            </div>
             <div class="view-product-rating-container">
                 <h4 class="view-product-info-header">Average Product Rating</h4>
                 <span class="view-product-rating-image"></span>
                 <span class="view-product-rating-score"><?php echo round($product['Product']['rating'],2); ?> out of 5</span>
                 <span class="view-product-rating-count">From <?php echo (count($comments)); ?> customer reviews.</span>
                 <a href="<?php echo $this->webroot;?>/customers/home" class="back-to-list-button view-back-button"><i class="fa fa-home"></i>Back to Home</a>
+            </div>
+            <img class="view-product-image" src="<?php echo $this->webroot.'images/products/'.$product['Product']['image']; ?>" onerror="this.src = '<?php echo $this->webroot; ?>img/product-default.jpg'">
+            <div class="view-product-info">
+                <h4 class="view-product-info-header">Product Information</h4>
+                <p class="view-product-type"><strong>Type : </strong><?php echo $product_types[$product['Product']['type']]; ?></p>
+                <p class="view-product-brand"><strong>Brand : </strong><?php echo $product['Product']['brand']; ?></p>
+                <p class="view-product-description"><strong>Description :</strong><?php echo $product['Product']['description']; ?></p>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@
 
     $("#CommentViewForm").on('submit', function(e) {
         $('#error-add-content').css('display', 'none');
-        if ($('#comment-add-content').val() != '') {
+        if ($('#comment-add-content').val() != '' && $('#comment-add-content').val() != null) {
             $.ajax({
                 url: '<?php echo $this->webroot;?>comments/add',
                 method: 'POST',

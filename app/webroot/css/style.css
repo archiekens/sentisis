@@ -707,20 +707,20 @@ svg.svg-inline--fa {
 
 .view-product-details>*{
     display: flex;
-    margin-right: 15px;
 }
 
 .view-product-image {
     height: 320px;
     max-width: 280px;
-    padding-right: 30px;
-    border-right: 1px solid rgba(0,0,0,0.075);
+    margin: 0px 30px;
     object-fit: contain;
 }
 
 .view-product-info {
     display: flex;
     flex-direction: column;
+    padding-left: 30px;
+    border-left: 1px solid rgba(0,0,0,0.075);
 }
 
 .view-product-info strong {
@@ -736,10 +736,8 @@ svg.svg-inline--fa {
     display: flex;
     flex-direction: column;
     min-width: 250px;
-    margin-left: auto;
-    margin-right: 0;
-    padding-left: 30px;
-    border-left: 1px solid rgba(0,0,0,0.075);
+    padding-right: 30px;
+    border-right: 1px solid rgba(0,0,0,0.075);
 }
 
 .view-product-rating-container>* {
@@ -759,7 +757,7 @@ svg.svg-inline--fa {
 .container-product-view-main .view-back-button{
     margin-top: auto;
     margin-bottom: 0;
-    align-self: flex-end;
+    align-self: flex-start;
 }
 
 .container-product-view-main .view-back-button .svg-inline--fa{
@@ -769,6 +767,7 @@ svg.svg-inline--fa {
 .container-product-view-lower {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
 }
 
 .container-comments{
