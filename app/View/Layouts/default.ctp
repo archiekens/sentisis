@@ -35,6 +35,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     ?>
     <script defer src="<?php echo $this->webroot; ?>js/fontawesome-all.js"></script>
     <script type="text/javascript" src="<?php echo $this->webroot; ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?php echo $this->webroot; ?>js/linkifyjs/linkify.min.js"></script>
+    <script src="<?php echo $this->webroot; ?>js/linkifyjs/linkify-jquery.min.js"></script>
 </head>
 <body>
     <div class="wrapper">

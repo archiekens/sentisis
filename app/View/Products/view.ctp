@@ -94,6 +94,8 @@
             "background-repeat" : "no-repeat",
             "background-blend-mode" : "color-dodge",
         });
+
+        $('.view-product-description').linkify();
     });
 
     $("#CommentViewForm").on('submit', function(e) {
